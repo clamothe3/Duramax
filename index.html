@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Duramax Body Shop — Kensington, MD</title>
+<link rel="stylesheet" href="shared.css">
+<link rel="stylesheet" href="animations.css">
+<script type="importmap">
+{
+  "imports": {
+    "three":          "https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js",
+    "three/addons/":  "https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/"
+  }
+}
+</script>
+<style>
+/* ── HERO ── */
+.hero {
+  position: relative;
+  height: 100vh; min-height: 580px; max-height: 800px;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.hero-video-bg {
+  position: absolute; inset: 0;
+  background: url('duramaxbuild.png') center center / cover no-repeat;
+}
+.hero-video-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.62) 75%, rgba(0,0,0,0.78) 100%);
+}
+.hero-content {
+  position: relative; z-index: 2;
+  text-align: center;
+  padding: 0 40px;
+  max-width: 820px;
+}
+.hero-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 600; letter-spacing: 4px;
+  color: #f88; text-transform: uppercase; margin-bottom: 16px;
+}
+.hero h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(52px, 9vw, 96px);
+  font-weight: 900; color: #fff; line-height: 0.92;
+  margin-bottom: 20px; text-wrap: balance;
+}
+.hero h1 em { color: #CC0000; font-style: normal; }
+.hero-sub {
+  font-size: 17px; color: rgba(255,255,255,0.7);
+  margin-bottom: 36px; line-height: 1.6;
+}
+.hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.hero-scroll {
+  position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+  z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.hero-scroll span { font-family: 'Barlow Condensed',sans-serif; font-size: 11px; color: #666; letter-spacing: 2px; }
+.hero-scroll-arrow {
+  width: 20px; height: 20px; border-right: 2px solid #555; border-bottom: 2px solid #555;
+  transform: rotate(45deg); margin-top: -6px; animation: bounce 1.6s infinite;
+}
+@keyframes bounce { 0%,100%{transform:rotate(45deg) translateY(0)} 50%{transform:rotate(45deg) translateY(5px)} }
+
+/* ── SERVICES GRID ── */
+.services-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+}
+.services-section { background: var(--off-white); }
+
+/* ── ABOUT STRIP ── */
+.about-strip {
+  background: var(--dark);
+  padding: 72px 80px;
+  display: flex; gap: 64px; align-items: center;
+}
+.about-strip-img {
+  flex: 0 0 400px; height: 300px; border-radius: 4px; overflow: hidden;
+}
+.about-strip-content { flex: 1; }
+.about-strip-content .section-sub { color: #888; margin-bottom: 24px; line-height: 1.7; }
+.about-strip-stats {
+  display: flex; gap: 32px; margin-top: 32px;
+  padding-top: 32px; border-top: 1px solid #2a2a2a;
+}
+.stat-num {
+  font-family: 'Barlow Condensed',sans-serif;
+  font-size: 40px; font-weight: 900; color: var(--red); line-height: 1;
+}
+.stat-label { font-size: 12px; color: #666; margin-top: 3px; }
+
+/* ── CTA ROW ── */
+.cta-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+}
+.cta-block {
+  padding: 56px 64px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.cta-block.dark { background: var(--black); }
+.cta-block.red { background: var(--red); }
+.cta-block h2 {
+  font-family: 'Barlow Condensed',sans-serif;
+  font-size: 36px; font-weight: 900; line-height: 1; color: #fff;
+}
+.cta-block p { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <a href="index.html" class="nav-logo">
+    <img src="../uploads/logo-1777475435311.webp" alt="Duramax Logo">
+    <div class="nav-logo-text">
+      <strong>DURAMAX</strong>
+      <span>Body Shop</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="detailing.html">Detailing</a>
+    <a href="reviews.html">Reviews</a>
+    <a href="contact.html">Contact</a>
+    <a href="tel:3018978190" class="nav-phone">(301) 897-8190</a>
+    <a href="appointments.html" class="nav-cta btn">Book Now</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-video-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Kensington, MD &nbsp;·&nbsp; Est. 1989 &nbsp;·&nbsp; Family Owned</div>
+    <h1>Expert Auto Body<br/><em>Repair & Restoration</em></h1>
+    <p class="hero-sub">35+ years of trusted collision repair, painting, detailing & mechanical service.<br/>Serving the DC Metro area — one vehicle at a time.</p>
+    <div class="hero-actions">
+      <a href="appointments.html" class="btn btn-red btn-lg">Book an Appointment</a>
+      <a href="services.html" class="btn btn-outline-white btn-lg">View All Services</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>SCROLL</span>
+    <div class="hero-scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <span>35+ Years in Business</span>
+  <span>Free Estimates</span>
+  <span>All Makes &amp; Models</span>
+  <span>Certified Technicians</span>
+  <span>Lifetime Warranty on Repairs</span>
+</div>
+
+<!-- 3D TRUCK -->
+<section class="car3d-section">
+  <div class="car3d-bg-word">DURAMAX</div>
+  <div class="car3d-inner">
+    <div class="car3d-text">
+      <div class="section-label reveal-anim">Our Craft</div>
+      <h2 class="section-title white reveal-anim" style="transition-delay:0.08s">Every Part.<br/>Perfect Precision.</h2>
+      <p class="car3d-text reveal-anim" style="color:#777;font-size:15px;line-height:1.7;margin-top:12px;transition-delay:0.16s">35 years of experience means we know your vehicle inside and out — from the chassis to the clear coat. Every component matters.</p>
+      <a href="services.html" class="btn btn-red btn-md reveal-anim" style="margin-top:24px;display:inline-block;transition-delay:0.24s">Explore Our Services</a>
+      <p class="car3d-hint reveal-anim" style="transition-delay:0.32s">Click the truck to explode it</p>
+    </div>
+    <div id="car-3d-canvas">
+      <div class="car3d-loading">
+        <div class="car3d-spinner"></div>
+        <span>Loading vehicle…</span>
+      </div>
+      <div class="car3d-explode-badge">LOADING</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section services-section">
+  <div class="section-header center">
+    <div class="section-label">What We Do</div>
+    <h2 class="section-title">Full-Service Auto Care</h2>
+    <p class="section-sub">From minor dents to major collision work — we handle it all with precision and care.</p>
+  </div>
+  <div class="services-grid">
+    <a href="services.html" class="service-card">
+      <div class="service-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3v-5l2-5h14l2 5v5h-2"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/><path d="M5 12h14"/></svg></div>
+      <h3>Collision Repair</h3>
+      <p>Expert structural and cosmetic repair after any accident.</p>
+    </a>
+    <a href="services.html" class="service-card">
+      <div class="service-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M9 12c0-1.7 1.3-3 3-3s3 1.3 3 3"/></svg></div>
+      <h3>Dent Removal</h3>
+      <p>Paintless and traditional dent repair for all panel types.</p>
+    </a>
+    <a href="services.html" class="service-card">
+      <div class="service-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18.37 2.63 14 7l-1.59-1.59a2 2 0 0 0-2.82 0L8 7l9 9 1.59-1.59a2 2 0 0 0 0-2.82L17 10l4.37-4.37a2.12 2.12 0 1 0-3-3Z"/><path d="M9 8c-2 2.5-2 6-2 6s3.5 0 6-2"/></svg></div>
+      <h3>Paint &amp; Scratches</h3>
+      <p>Factory-matched color paint and scratch restoration.</p>
+    </a>
+    <a href="services.html" class="service-card">
+      <div class="service-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="8" y1="7" x2="8" y2="17"/><line x1="16" y1="7" x2="16" y2="17"/><line x1="3" y1="7" x2="3" y2="17"/><line x1="21" y1="7" x2="21" y2="17"/></svg></div>
+      <h3>Frame Straightening</h3>
+      <p>Precision frame and unibody alignment using modern equipment.</p>
+    </a>
+    <a href="services.html" class="service-card">
+      <div class="service-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"/><line x1="8" y1="16" x2="8" y2="19"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="16" y1="16" x2="16" y2="19"/></svg></div>
+      <h3>Hail Damage Repair</h3>
+      <p>Restore your vehicle after storm and hail damage.</p>
+    </a>
+    <a href="services.html" class="service-card">
+      <div class="service-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="9" y1="12" x2="15" y2="12"/></svg></div>
+      <h3>Rust Repair</h3>
+      <p>Remove and treat rust before it spreads further.</p>
+    </a>
+    <a href="services.html" class="service-card">
+      <div class="service-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+      <h3>Mechanical Service</h3>
+      <p>Brakes, engine, transmission, oil changes &amp; more.</p>
+    </a>
+    <a href="detailing.html" class="service-card">
+      <div class="service-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="19.07" y1="4.93" x2="16.24" y2="7.76"/><line x1="7.76" y1="16.24" x2="4.93" y2="19.07"/></svg></div>
+      <h3>Car Detailing</h3>
+      <p>Interior &amp; exterior detailing packages — Basic to Elite.</p>
+    </a>
+  </div>
+  <div style="text-align:center;margin-top:36px;">
+    <a href="services.html" class="btn btn-outline-red btn-md">View All 30+ Services →</a>
+  </div>
+</section>
+
+<!-- ABOUT STRIP -->
+<div class="about-strip">
+  <div class="about-strip-img img-placeholder dark">shop / team photo</div>
+  <div class="about-strip-content">
+    <div class="section-label">About Duramax</div>
+    <h2 class="section-title white">Family-Owned.<br/>Community-Trusted.</h2>
+    <p class="section-sub">Founded in 1989, Duramax Body Shop has grown into one of Maryland's most trusted auto body repair centers. Our certified technicians bring decades of hands-on experience to every job — treating every car as if it were their own.</p>
+    <a href="about.html" class="btn btn-outline-white btn-md">Our Story →</a>
+    <div class="about-strip-stats">
+      <div>
+        <div class="stat-num">35+</div>
+        <div class="stat-label">Years in Business</div>
+      </div>
+      <div>
+        <div class="stat-num">5,000+</div>
+        <div class="stat-label">Vehicles Repaired</div>
+      </div>
+      <div>
+        <div class="stat-num">★ 4.9</div>
+        <div class="stat-label">Google Rating</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA ROW -->
+<div class="cta-row">
+  <div class="cta-block dark">
+    <div class="section-label">Car Detailing</div>
+    <h2>Make It Look<br/>Brand New</h2>
+    <p>Three packages designed for every need — from a quick refresh to a complete showroom treatment.</p>
+    <div><a href="detailing.html" class="btn btn-red btn-md" style="align-self:flex-start;">See Detailing Packages</a></div>
+  </div>
+  <div class="cta-block red">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:rgba(255,255,255,0.6);letter-spacing:3px;text-transform:uppercase;">Online Booking</div>
+    <h2>Ready to<br/>Book Your Visit?</h2>
+    <p>Pick your service, choose a date and time — we'll confirm within 24 hours.</p>
+    <div><a href="appointments.html" class="btn btn-outline-white btn-md" style="align-self:flex-start;">Book an Appointment</a></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="../uploads/logo-1777475435311.webp" alt="Duramax Logo">
+      <p>Expert auto body repair serving Kensington, MD and the greater DC metro area since 1989.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Pages</h4>
+      <a href="about.html">About Us</a>
+      <a href="services.html">Services</a>
+      <a href="detailing.html">Detailing</a>
+      <a href="appointments.html">Appointments</a>
+      <a href="reviews.html">Reviews</a>
+    <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="services.html">Collision Repair</a>
+      <a href="services.html">Dent Removal</a>
+      <a href="services.html">Paint &amp; Scratches</a>
+      <a href="services.html">Frame Repair</a>
+      <a href="services.html">Hail Damage</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p class="highlight">(301) 897-8190</p>
+      <a href="mailto:duramaxbodyshop@gmail.com" style="color:#666;font-size:13px;text-decoration:none;display:block;margin-bottom:10px;">duramaxbodyshop@gmail.com</a>
+      <p>10515 Summit Ave</p>
+      <p>Kensington, MD 20895</p>
+      <p style="margin-top:8px;">Mon–Fri: 9am – 5pm</p>
+      <p>Sat: 9am – 1pm</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 <span>Duramax Body Shop</span>. All rights reserved.</p>
+    <p>10515 Summit Ave, Kensington, MD 20895</p>
+  </div>
+</footer>
+
+
+<!-- Animations + 3D car -->
+<script src="animations.js"></script>
+<script type="module" src="car3d.js"></script>
+
+<!-- Tweaks Panel -->
+<style>
+#tweaks-panel {
+  display: none;
+  position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+  background: #1a1a1a; border: 1px solid #2e2e2e; border-radius: 8px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  width: 260px; font-family: 'Barlow', sans-serif; overflow: hidden;
+}
+#tweaks-panel.open { display: block; }
+.tp-header {
+  background: #111; padding: 12px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid #2e2e2e; cursor: move; user-select: none;
+}
+.tp-header span { font-family: 'Barlow Condensed',sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; color: #fff; text-transform: uppercase; }
+.tp-close { background: none; border: none; color: #666; cursor: pointer; font-size: 16px; padding: 0; line-height: 1; transition: color 0.15s; }
+.tp-close:hover { color: #fff; }
+.tp-section { padding: 14px 16px; border-bottom: 1px solid #222; }
+.tp-section:last-child { border-bottom: none; }
+.tp-section-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #CC0000; text-transform: uppercase; margin-bottom: 10px; }
+.tp-radio-group { display: flex; flex-direction: column; gap: 6px; }
+.tp-radio {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 10px; border-radius: 4px; cursor: pointer;
+  border: 1.5px solid #2e2e2e; background: #111;
+  transition: all 0.15s;
+}
+.tp-radio:hover { border-color: #444; }
+.tp-radio.active { border-color: #CC0000; background: rgba(204,0,0,0.08); }
+.tp-radio-dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  border: 2px solid #444; flex-shrink: 0; transition: all 0.15s;
+}
+.tp-radio.active .tp-radio-dot { border-color: #CC0000; background: #CC0000; }
+.tp-radio-info { flex: 1; }
+.tp-radio-name { font-size: 13px; font-weight: 600; color: #ccc; line-height: 1; margin-bottom: 2px; }
+.tp-radio.active .tp-radio-name { color: #fff; }
+.tp-radio-hint { font-size: 11px; color: #555; }
+.tp-radio.active .tp-radio-hint { color: #f99; }
+</style>
+
+<div id="tweaks-panel">
+  <div class="tp-header">
+    <span>Tweaks</span>
+    <button class="tp-close" id="tp-close-btn">✕</button>
+  </div>
+  <div class="tp-section">
+    <div class="tp-section-label">Color Palette</div>
+    <div class="tp-radio-group" id="tp-palette">
+      <div class="tp-radio active" data-val="Sport"><div class="tp-radio-dot"></div><div class="tp-radio-info"><div class="tp-radio-name">Sport</div><div class="tp-radio-hint">Black &amp; red — bold</div></div></div>
+      <div class="tp-radio" data-val="Premium"><div class="tp-radio-dot"></div><div class="tp-radio-info"><div class="tp-radio-name">Premium</div><div class="tp-radio-hint">Charcoal &amp; gold</div></div></div>
+      <div class="tp-radio" data-val="Sharp"><div class="tp-radio-dot"></div><div class="tp-radio-info"><div class="tp-radio-name">Sharp</div><div class="tp-radio-hint">Navy &amp; red — sleek</div></div></div>
+    </div>
+  </div>
+  <div class="tp-section">
+    <div class="tp-section-label">Hero Mood</div>
+    <div class="tp-radio-group" id="tp-heroMood">
+      <div class="tp-radio active" data-val="Dramatic"><div class="tp-radio-dot"></div><div class="tp-radio-info"><div class="tp-radio-name">Dramatic</div><div class="tp-radio-hint">Centered, layered overlay</div></div></div>
+      <div class="tp-radio" data-val="Editorial"><div class="tp-radio-dot"></div><div class="tp-radio-info"><div class="tp-radio-name">Editorial</div><div class="tp-radio-hint">Left-aligned, text-forward</div></div></div>
+      <div class="tp-radio" data-val="Cinematic"><div class="tp-radio-dot"></div><div class="tp-radio-info"><div class="tp-radio-name">Cinematic</div><div class="tp-radio-hint">Giant type, raw &amp; bold</div></div></div>
+    </div>
+  </div>
+  <div class="tp-section">
+    <div class="tp-section-label">Layout Style</div>
+    <div class="tp-radio-group" id="tp-layoutStyle">
+      <div class="tp-radio active" data-val="Spacious"><div class="tp-radio-dot"></div><div class="tp-radio-info"><div class="tp-radio-name">Spacious</div><div class="tp-radio-hint">Breathable, open sections</div></div></div>
+      <div class="tp-radio" data-val="Dense"><div class="tp-radio-dot"></div><div class="tp-radio-info"><div class="tp-radio-name">Dense</div><div class="tp-radio-hint">Tight &amp; compact</div></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "palette": "Sport",
+    "heroMood": "Dramatic",
+    "layoutStyle": "Spacious"
+  }/*EDITMODE-END*/;
+
+  const PALETTES = {
+    Sport:   { '--red':'#CC0000','--red-dark':'#a30000','--black':'#0f0f0f','--dark':'#1a1a1a','--dark2':'#222' },
+    Premium: { '--red':'#C8A54A','--red-dark':'#a08030','--black':'#1c1a16','--dark':'#252118','--dark2':'#2e2a1f' },
+    Sharp:   { '--red':'#CC0000','--red-dark':'#a30000','--black':'#0a1628','--dark':'#101e35','--dark2':'#162440' },
+  };
+
+  const HERO_MOODS = {
+    Dramatic:  { overlay:'linear-gradient(to bottom,rgba(0,0,0,0.25) 0%,rgba(0,0,0,0.72) 100%)', align:'center', h1Size:'clamp(52px,9vw,96px)', eyebrow:true, sub:true },
+    Editorial: { overlay:'linear-gradient(to right,rgba(0,0,0,0.82) 0%,rgba(0,0,0,0.3) 100%)',   align:'flex-start', h1Size:'clamp(44px,7vw,80px)', eyebrow:true, sub:true },
+    Cinematic: { overlay:'linear-gradient(to bottom,rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.88) 60%,rgba(0,0,0,0.95) 100%)', align:'center', h1Size:'clamp(72px,12vw,128px)', eyebrow:false, sub:false },
+  };
+
+  const LAYOUTS = {
+    Spacious: { sec:'72px 80px', card:'24px 20px', gap:'16px', cta:'56px 64px' },
+    Dense:    { sec:'48px 60px', card:'16px 14px', gap:'10px', cta:'40px 48px' },
+  };
+
+  const state = Object.assign({}, TWEAK_DEFAULTS);
+
+  function getOrCreateStyle(id) {
+    let el = document.getElementById(id);
+    if (!el) { el = document.createElement('style'); el.id = id; document.head.appendChild(el); }
+    return el;
+  }
+
+  function applyTweaks() {
+    const root = document.documentElement;
+    // Palette
+    Object.entries(PALETTES[state.palette]||PALETTES.Sport).forEach(([k,v]) => root.style.setProperty(k,v));
+    // Hero mood
+    const m = HERO_MOODS[state.heroMood]||HERO_MOODS.Dramatic;
+    getOrCreateStyle('tp-hero-style').textContent = `
+      .hero-video-bg::after { background: ${m.overlay} !important; }
+      .hero-content { text-align: ${m.align} !important; ${m.align==='flex-start'?'padding-left:min(10vw,120px)!important;':''} }
+      .hero h1 { font-size: ${m.h1Size} !important; }
+      .hero-eyebrow { display: ${m.eyebrow?'block':'none'} !important; }
+      .hero-sub { display: ${m.sub?'block':'none'} !important; }
+      ${m.align==='flex-start'?'.hero-actions{justify-content:flex-start!important}':''}
+    `;
+    // Layout
+    const l = LAYOUTS[state.layoutStyle]||LAYOUTS.Spacious;
+    getOrCreateStyle('tp-layout-style').textContent = `
+      .section,.section-sm { padding: ${l.sec} !important; }
+      .service-card { padding: ${l.card} !important; }
+      .services-grid { gap: ${l.gap} !important; }
+      .about-strip { padding: ${l.sec} !important; }
+      .cta-block { padding: ${l.cta} !important; }
+    `;
+    // Sync panel UI
+    ['palette','heroMood','layoutStyle'].forEach(key => {
+      document.querySelectorAll(`#tp-${key} .tp-radio`).forEach(el => {
+        el.classList.toggle('active', el.dataset.val === state[key]);
+      });
+    });
+    // Persist
+    window.parent.postMessage({ type:'__edit_mode_set_keys', edits: {...state} }, '*');
+  }
+
+  // Wire radio clicks
+  ['palette','heroMood','layoutStyle'].forEach(key => {
+    document.querySelectorAll(`#tp-${key} .tp-radio`).forEach(el => {
+      el.addEventListener('click', () => { state[key] = el.dataset.val; applyTweaks(); });
+    });
+  });
+
+  // Close button
+  document.getElementById('tp-close-btn').addEventListener('click', () => {
+    document.getElementById('tweaks-panel').classList.remove('open');
+    window.parent.postMessage({ type:'__edit_mode_dismissed' }, '*');
+  });
+
+  // Drag
+  const panel = document.getElementById('tweaks-panel');
+  const header = panel.querySelector('.tp-header');
+  header.addEventListener('mousedown', e => {
+    if (e.target === document.getElementById('tp-close-btn')) return;
+    const r = panel.getBoundingClientRect();
+    const ox = e.clientX - r.left, oy = e.clientY - r.top;
+    const move = ev => {
+      panel.style.left = (ev.clientX - ox) + 'px';
+      panel.style.top  = (ev.clientY - oy) + 'px';
+      panel.style.right = 'auto'; panel.style.bottom = 'auto';
+    };
+    const up = () => { window.removeEventListener('mousemove', move); window.removeEventListener('mouseup', up); };
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', up);
+  });
+
+  // Host protocol
+  window.addEventListener('message', e => {
+    if (e.data?.type === '__activate_edit_mode')   panel.classList.add('open');
+    if (e.data?.type === '__deactivate_edit_mode') panel.classList.remove('open');
+  });
+  window.parent.postMessage({ type:'__edit_mode_available' }, '*');
+
+  // Apply defaults on load
+  applyTweaks();
+})();
+</script>
+
+</body>
+</html>

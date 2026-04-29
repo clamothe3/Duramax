@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book an Appointment — Duramax Body Shop</title>
+<link rel="stylesheet" href="shared.css">
+<link rel="stylesheet" href="animations.css">
+<style>
+.booking-layout {
+  display: grid; grid-template-columns: 1fr 380px;
+  gap: 0; min-height: 700px;
+}
+.booking-main { padding: 56px 64px; }
+.booking-sidebar {
+  background: var(--off-white);
+  border-left: 1.5px solid #e0ddd7;
+  padding: 48px 36px;
+  position: sticky; top: 64px; height: calc(100vh - 64px);
+  overflow-y: auto;
+}
+
+/* Steps */
+.steps-nav {
+  display: flex; gap: 0; margin-bottom: 48px;
+  border-bottom: 2px solid #e8e6e1;
+}
+.step-tab {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 24px 16px 0; cursor: pointer;
+  border-bottom: 3px solid transparent; margin-bottom: -2px;
+  transition: all 0.2s;
+}
+.step-tab.active .step-num { background: var(--red); color: #fff; }
+.step-tab.active .step-text { color: var(--text); }
+.step-tab.done .step-num { background: var(--red); color: #fff; }
+.step-tab.done .step-num::after { content: '✓'; }
+.step-tab.active { border-bottom-color: var(--red); }
+.step-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: #ddd; color: #888;
+  font-family: 'Barlow Condensed',sans-serif; font-size: 14px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: all 0.2s;
+}
+.step-text { font-family: 'Barlow Condensed',sans-serif; font-size: 15px; font-weight: 700; color: #aaa; transition: color 0.2s; }
+
+/* Step panels */
+.step-panel { display: none; }
+.step-panel.active { display: block; }
+.step-title {
+  font-family: 'Barlow Condensed',sans-serif;
+  font-size: 28px; font-weight: 900; margin-bottom: 6px;
+}
+.step-sub { font-size: 14px; color: var(--mid); margin-bottom: 32px; }
+
+/* Service select */
+.service-cats { display: flex; flex-direction: column; gap: 20px; }
+.service-cat-title {
+  font-family: 'Barlow Condensed',sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 2px;
+  color: var(--red); text-transform: uppercase; margin-bottom: 10px;
+}
+.service-options { display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; }
+.service-option {
+  padding: 12px 16px; border: 1.5px solid #e0ddd7; border-radius: 3px;
+  cursor: pointer; transition: all 0.15s; background: #fff;
+  font-size: 14px; user-select: none;
+}
+.service-option:hover { border-color: #ccc; }
+.service-option.selected { border-color: var(--red); background: #fff5f5; color: var(--red); font-weight: 600; }
+
+/* Calendar */
+.calendar-wrap { max-width: 380px; }
+.cal-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px;
+}
+.cal-nav button {
+  background: none; border: 1.5px solid #ddd; border-radius: 3px;
+  width: 32px; height: 32px; cursor: pointer; font-size: 16px; color: #666;
+  transition: all 0.15s;
+}
+.cal-nav button:hover { border-color: var(--red); color: var(--red); }
+.cal-month {
+  font-family: 'Barlow Condensed',sans-serif;
+  font-size: 18px; font-weight: 800;
+}
+.cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; text-align: center; }
+.cal-header { font-family: 'Barlow Condensed',sans-serif; font-size: 12px; font-weight: 700; color: var(--mid); padding: 4px 0; }
+.cal-day {
+  padding: 8px 0; border-radius: 3px; cursor: pointer; font-size: 14px;
+  transition: all 0.15s; user-select: none;
+}
+.cal-day:hover:not(.disabled):not(.empty) { background: var(--off-white); }
+.cal-day.today { font-weight: 700; color: var(--red); }
+.cal-day.selected { background: var(--red); color: #fff; font-weight: 700; }
+.cal-day.disabled { color: #ddd; cursor: default; }
+.cal-day.empty { cursor: default; }
+
+/* Time slots */
+.time-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-top: 24px; }
+.time-slot {
+  padding: 10px; border: 1.5px solid #e0ddd7; border-radius: 3px;
+  text-align: center; cursor: pointer; font-size: 14px;
+  transition: all 0.15s; background: #fff; user-select: none;
+}
+.time-slot:hover { border-color: #ccc; }
+.time-slot.selected { border-color: var(--red); background: #fff5f5; color: var(--red); font-weight: 600; }
+.time-slot.unavailable { color: #ccc; background: #fafafa; cursor: not-allowed; }
+
+/* Info form */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group.full { grid-column: 1/-1; }
+.form-group label {
+  font-family: 'Barlow Condensed',sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.5px; color: #555;
+}
+.form-group input, .form-group select, .form-group textarea {
+  border: 1.5px solid #ddd; border-radius: 3px;
+  padding: 10px 14px; font-family: 'Barlow',sans-serif; font-size: 14px;
+  color: var(--text); background: #fff; transition: border-color 0.15s;
+  outline: none;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  border-color: var(--red);
+}
+.form-group textarea { resize: vertical; min-height: 90px; }
+
+/* Step nav buttons */
+.step-actions { display: flex; gap: 12px; margin-top: 32px; }
+
+/* Sidebar summary */
+.summary-title {
+  font-family: 'Barlow Condensed',sans-serif;
+  font-size: 16px; font-weight: 800; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--mid); margin-bottom: 20px;
+}
+.summary-item {
+  display: flex; gap: 12px; margin-bottom: 16px; padding-bottom: 16px;
+  border-bottom: 1px solid #e0ddd7;
+}
+.summary-item:last-of-type { border-bottom: none; }
+.summary-item-icon {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #fff; border: 1.5px solid #ddd;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+}
+.summary-item-label { font-size: 11px; color: var(--mid); margin-bottom: 2px; }
+.summary-item-val { font-family: 'Barlow Condensed',sans-serif; font-size: 16px; font-weight: 700; color: var(--text); }
+.summary-item-val.empty { color: #ccc; font-weight: 400; font-family: 'Barlow',sans-serif; font-size: 13px; font-style: italic; }
+
+.contact-info-box {
+  margin-top: 32px; background: var(--black); border-radius: 4px; padding: 20px;
+}
+.contact-info-box h4 { font-family: 'Barlow Condensed',sans-serif; font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+.contact-info-box p { font-size: 13px; color: #666; line-height: 1.8; }
+.contact-info-box a { color: var(--red); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="index.html" class="nav-logo">
+    <img src="../uploads/logo-1777475435311.webp" alt="Duramax Logo">
+    <div class="nav-logo-text"><strong>DURAMAX</strong><span>Body Shop</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="detailing.html">Detailing</a>
+    <a href="reviews.html">Reviews</a>
+    <a href="contact.html">Contact</a>
+    <a href="tel:3018978190" class="nav-phone">(301) 897-8190</a>
+    <a href="appointments.html" class="nav-cta btn">Book Now</a>
+  </div>
+</nav>
+
+<div class="page-hero" style="padding:40px 80px;">
+  <div class="page-hero-label">Appointments</div>
+  <h1>Book Your Visit</h1>
+  <p>Easy online scheduling — choose your service, pick a time, and we'll confirm within 24 hours.</p>
+</div>
+
+<div class="booking-layout">
+  <div class="booking-main">
+
+    <!-- Step tabs -->
+    <div class="steps-nav">
+      <div class="step-tab active" id="tab-1" onclick="goStep(1)">
+        <div class="step-num" id="num-1">1</div>
+        <div class="step-text">Service</div>
+      </div>
+      <div class="step-tab" id="tab-2" onclick="goStep(2)">
+        <div class="step-num" id="num-2">2</div>
+        <div class="step-text">Date &amp; Time</div>
+      </div>
+      <div class="step-tab" id="tab-3" onclick="goStep(3)">
+        <div class="step-num" id="num-3">3</div>
+        <div class="step-text">Your Info</div>
+      </div>
+      <div class="step-tab" id="tab-4" onclick="goStep(4)">
+        <div class="step-num" id="num-4">4</div>
+        <div class="step-text">Confirm</div>
+      </div>
+    </div>
+
+    <!-- Step 1: Service -->
+    <div class="step-panel active" id="panel-1">
+      <div class="step-title">Select a Service</div>
+      <div class="step-sub">What does your vehicle need? Pick the closest match.</div>
+      <div class="service-cats">
+        <div>
+          <div class="service-cat-title">Body &amp; Collision</div>
+          <div class="service-options">
+            <div class="service-option" onclick="selectService(this,'Collision Repair')">Collision Repair</div>
+            <div class="service-option" onclick="selectService(this,'Dent Removal')">Dent Removal</div>
+            <div class="service-option" onclick="selectService(this,'Bumper Repair')">Bumper Repair</div>
+            <div class="service-option" onclick="selectService(this,'Hail Damage Repair')">Hail Damage Repair</div>
+            <div class="service-option" onclick="selectService(this,'Rust Repair')">Rust Repair</div>
+            <div class="service-option" onclick="selectService(this,'Frame Straightening')">Frame Straightening</div>
+          </div>
+        </div>
+        <div>
+          <div class="service-cat-title">Paint</div>
+          <div class="service-options">
+            <div class="service-option" onclick="selectService(this,'Paint & Scratch Repair')">Paint &amp; Scratch Repair</div>
+            <div class="service-option" onclick="selectService(this,'Full Vehicle Painting')">Full Vehicle Painting</div>
+          </div>
+        </div>
+        <div>
+          <div class="service-cat-title">Mechanical</div>
+          <div class="service-options">
+            <div class="service-option" onclick="selectService(this,'Oil Change')">Oil Change</div>
+            <div class="service-option" onclick="selectService(this,'Brake Repair')">Brake Repair</div>
+            <div class="service-option" onclick="selectService(this,'Wheel Alignment')">Wheel Alignment</div>
+            <div class="service-option" onclick="selectService(this,'Engine Repair')">Engine Repair</div>
+            <div class="service-option" onclick="selectService(this,'Transmission Repair')">Transmission Repair</div>
+            <div class="service-option" onclick="selectService(this,'Check Engine Light')">Check Engine Light</div>
+          </div>
+        </div>
+        <div>
+          <div class="service-cat-title">Detailing</div>
+          <div class="service-options">
+            <div class="service-option" onclick="selectService(this,'Detailing — Basic')">Basic Detail</div>
+            <div class="service-option" onclick="selectService(this,'Detailing — Premium')">Premium Detail</div>
+            <div class="service-option" onclick="selectService(this,'Detailing — Elite')">Elite Detail</div>
+          </div>
+        </div>
+      </div>
+      <div class="step-actions">
+        <button class="btn btn-red btn-md" onclick="goStep(2)">Next: Choose Date →</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Date & Time -->
+    <div class="step-panel" id="panel-2">
+      <div class="step-title">Choose a Date &amp; Time</div>
+      <div class="step-sub">Select an available appointment slot below.</div>
+      <div class="calendar-wrap">
+        <div class="cal-nav">
+          <button onclick="prevMonth()">‹</button>
+          <div class="cal-month" id="cal-month-label">May 2026</div>
+          <button onclick="nextMonth()">›</button>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+      </div>
+      <div class="time-grid" id="time-grid" style="display:none;">
+        <div class="time-slot" onclick="selectTime(this,'8:00 AM')">8:00 AM</div>
+        <div class="time-slot" onclick="selectTime(this,'9:00 AM')">9:00 AM</div>
+        <div class="time-slot" onclick="selectTime(this,'10:00 AM')">10:00 AM</div>
+        <div class="time-slot" onclick="selectTime(this,'11:00 AM')">11:00 AM</div>
+        <div class="time-slot unavailable">12:00 PM</div>
+        <div class="time-slot" onclick="selectTime(this,'1:00 PM')">1:00 PM</div>
+        <div class="time-slot" onclick="selectTime(this,'2:00 PM')">2:00 PM</div>
+        <div class="time-slot unavailable">3:00 PM</div>
+        <div class="time-slot" onclick="selectTime(this,'4:00 PM')">4:00 PM</div>
+      </div>
+      <div class="step-actions">
+        <button class="btn btn-outline-red btn-md" onclick="goStep(1)">← Back</button>
+        <button class="btn btn-red btn-md" onclick="goStep(3)">Next: Your Info →</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Info -->
+    <div class="step-panel" id="panel-3">
+      <div class="step-title">Your Information</div>
+      <div class="step-sub">So we can confirm and reach you about your appointment.</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="John" oninput="updateSummary()">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="Smith" oninput="updateSummary()">
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="(301) 555-0100">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="john@email.com">
+        </div>
+        <div class="form-group">
+          <label>Vehicle Make &amp; Model</label>
+          <input type="text" placeholder="e.g. 2018 Honda Accord" oninput="updateVehicle(this.value)">
+        </div>
+        <div class="form-group">
+          <label>Vehicle Year</label>
+          <input type="text" placeholder="e.g. 2018">
+        </div>
+        <div class="form-group full">
+          <label>Additional Notes (optional)</label>
+          <textarea placeholder="Describe any additional details about your vehicle or the issue…"></textarea>
+        </div>
+      </div>
+      <div class="step-actions">
+        <button class="btn btn-outline-red btn-md" onclick="goStep(2)">← Back</button>
+        <button class="btn btn-red btn-md" onclick="goStep(4)">Review &amp; Confirm →</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Confirm -->
+    <div class="step-panel" id="panel-4">
+      <div class="step-title">Confirm Your Appointment</div>
+      <div class="step-sub">Review your details below, then submit to request your appointment.</div>
+      <div style="background:var(--off-white);border-radius:4px;padding:28px 32px;margin-bottom:28px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+          <div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:1px;color:var(--mid);text-transform:uppercase;margin-bottom:4px;">Service</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;" id="confirm-service">—</div>
+          </div>
+          <div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:1px;color:var(--mid);text-transform:uppercase;margin-bottom:4px;">Date &amp; Time</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;" id="confirm-datetime">—</div>
+          </div>
+          <div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:1px;color:var(--mid);text-transform:uppercase;margin-bottom:4px;">Name</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;" id="confirm-name">—</div>
+          </div>
+          <div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:1px;color:var(--mid);text-transform:uppercase;margin-bottom:4px;">Vehicle</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;" id="confirm-vehicle">—</div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:13px;color:var(--mid);margin-bottom:24px;line-height:1.7;">By submitting this form you're requesting an appointment. A member of our team will call you within 24 hours to confirm. For immediate scheduling, call <a href="tel:3018978190" style="color:var(--red);">(301) 897-8190</a>.</p>
+      <div class="step-actions">
+        <button class="btn btn-outline-red btn-md" onclick="goStep(3)">← Edit</button>
+        <button class="btn btn-red btn-lg" onclick="submitForm()">Submit Appointment Request</button>
+      </div>
+      <div id="success-msg" style="display:none;margin-top:24px;background:#e8f5e8;border:1.5px solid #4caf50;border-radius:4px;padding:20px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:#2e7d32;margin-bottom:6px;">✓ Request Received!</div>
+        <p style="font-size:14px;color:#388e3c;">We'll call you at the number provided within 24 hours to confirm your appointment. Thank you for choosing Duramax!</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Sidebar -->
+  <div class="booking-sidebar">
+    <div class="summary-title">Your Appointment</div>
+
+    <div class="summary-item">
+      <div class="summary-item-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+      <div>
+        <div class="summary-item-label">Service</div>
+        <div class="summary-item-val empty" id="sum-service">Not selected</div>
+      </div>
+    </div>
+    <div class="summary-item">
+      <div class="summary-item-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+      <div>
+        <div class="summary-item-label">Date</div>
+        <div class="summary-item-val empty" id="sum-date">Not selected</div>
+      </div>
+    </div>
+    <div class="summary-item">
+      <div class="summary-item-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+      <div>
+        <div class="summary-item-label">Time</div>
+        <div class="summary-item-val empty" id="sum-time">Not selected</div>
+      </div>
+    </div>
+    <div class="summary-item">
+      <div class="summary-item-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+      <div>
+        <div class="summary-item-label">Name</div>
+        <div class="summary-item-val empty" id="sum-name">Not entered</div>
+      </div>
+    </div>
+    <div class="summary-item">
+      <div class="summary-item-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3v-5l2-5h14l2 5v5h-2"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/><path d="M5 12h14"/></svg></div>
+      <div>
+        <div class="summary-item-label">Vehicle</div>
+        <div class="summary-item-val empty" id="sum-vehicle">Not entered</div>
+      </div>
+    </div>
+
+    <div class="contact-info-box">
+      <h4>Prefer to Call?</h4>
+      <p><a href="tel:3018978190">(301) 897-8190</a><br/>Mon–Fri: 8am – 6pm<br/>Sat: 9am – 3pm<br/><br/>10515 Summit Ave<br/>Kensington, MD 20895</p>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="../uploads/logo-1777475435311.webp" alt="Duramax Logo">
+      <p>Expert auto body repair serving Kensington, MD and the greater DC metro area since 1989.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Pages</h4>
+      <a href="about.html">About Us</a>
+      <a href="services.html">Services</a>
+      <a href="detailing.html">Detailing</a>
+      <a href="appointments.html">Appointments</a>
+      <a href="reviews.html">Reviews</a>
+    <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="services.html">Collision Repair</a>
+      <a href="services.html">Dent Removal</a>
+      <a href="services.html">Paint &amp; Scratches</a>
+      <a href="services.html">Frame Repair</a>
+      <a href="services.html">Hail Damage</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p class="highlight">(301) 897-8190</p>
+      <a href="mailto:duramaxbodyshop@gmail.com" style="color:#666;font-size:13px;text-decoration:none;display:block;margin-bottom:10px;">duramaxbodyshop@gmail.com</a>
+      <p>10515 Summit Ave</p>
+      <p>Kensington, MD 20895</p>
+      <p style="margin-top:8px;">Mon–Fri: 9am – 5pm</p>
+      <p>Sat: 9am – 1pm</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 <span>Duramax Body Shop</span>. All rights reserved.</p>
+    <p>10515 Summit Ave, Kensington, MD 20895</p>
+  </div>
+</footer>
+
+<script>
+const state = { step:1, service:'', date:'', time:'', month:4, year:2026 };
+
+function goStep(n) {
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.step-tab').forEach((t,i) => {
+    t.classList.remove('active');
+    if (i+1 < n) t.classList.add('done'); else t.classList.remove('done');
+  });
+  document.getElementById('panel-'+n).classList.add('active');
+  document.getElementById('tab-'+n).classList.add('active');
+  state.step = n;
+  if (n===4) populateConfirm();
+}
+
+function selectService(el, name) {
+  document.querySelectorAll('.service-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  state.service = name;
+  setSumVal('sum-service', name);
+  setSumVal('confirm-service', name);
+}
+
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+function renderCal() {
+  const grid = document.getElementById('cal-grid');
+  document.getElementById('cal-month-label').textContent = MONTHS[state.month] + ' ' + state.year;
+  const first = new Date(state.year, state.month, 1).getDay();
+  const days = new Date(state.year, state.month+1, 0).getDate();
+  const today = new Date();
+  let html = ['S','M','T','W','T','F','S'].map(d=>`<div class="cal-header">${d}</div>`).join('');
+  for(let i=0;i<first;i++) html += '<div class="cal-day empty"></div>';
+  for(let d=1;d<=days;d++) {
+    const isPast = new Date(state.year,state.month,d) < new Date(today.getFullYear(),today.getMonth(),today.getDate());
+    const isToday = d===today.getDate()&&state.month===today.getMonth()&&state.year===today.getFullYear();
+    const isSelected = state.date === `${MONTHS[state.month]} ${d}, ${state.year}`;
+    const isSun = (first+d-1)%7===0;
+    const cls = [isPast||isSun?'disabled':'', isToday?'today':'', isSelected?'selected':''].filter(Boolean).join(' ');
+    const click = (!isPast&&!isSun) ? `onclick="selectDay(this,'${MONTHS[state.month]} ${d}, ${state.year}')"` : '';
+    html += `<div class="cal-day ${cls}" ${click}>${d}</div>`;
+  }
+  grid.innerHTML = html;
+}
+
+function selectDay(el, date) {
+  state.date = date;
+  document.getElementById('time-grid').style.display = 'grid';
+  renderCal();
+  setSumVal('sum-date', date);
+}
+
+function selectTime(el, time) {
+  document.querySelectorAll('.time-slot').forEach(t => t.classList.remove('selected'));
+  el.classList.add('selected');
+  state.time = time;
+  setSumVal('sum-time', time);
+}
+
+function prevMonth() { state.month--; if(state.month<0){state.month=11;state.year--;} renderCal(); }
+function nextMonth() { state.month++; if(state.month>11){state.month=0;state.year++;} renderCal(); }
+
+function setSumVal(id, val) {
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.textContent = val;
+  el.classList.remove('empty');
+}
+
+function updateSummary() {
+  const inputs = document.querySelectorAll('#panel-3 input');
+  const first = inputs[0]?.value||''; const last = inputs[1]?.value||'';
+  if(first||last) setSumVal('sum-name', (first+' '+last).trim());
+}
+function updateVehicle(v) { if(v) setSumVal('sum-vehicle', v); }
+
+function populateConfirm() {
+  document.getElementById('confirm-service').textContent = state.service || '—';
+  document.getElementById('confirm-datetime').textContent = state.date && state.time ? state.date+' at '+state.time : '—';
+  document.getElementById('confirm-name').textContent = document.getElementById('sum-name').textContent;
+  document.getElementById('confirm-vehicle').textContent = document.getElementById('sum-vehicle').textContent;
+}
+
+function submitForm() {
+  document.getElementById('success-msg').style.display = 'block';
+  document.querySelector('#panel-4 .step-actions').style.display = 'none';
+}
+
+renderCal();
+</script>
+<script src="animations.js"></script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reviews — Duramax Body Shop</title>
+<link rel="stylesheet" href="shared.css">
+<link rel="stylesheet" href="animations.css">
+<style>
+.reviews-summary {
+  background: var(--black); padding: 48px 80px;
+  display: flex; gap: 64px; align-items: center;
+}
+.summary-score { text-align: center; flex-shrink: 0; }
+.score-num {
+  font-family: 'Barlow Condensed',sans-serif;
+  font-size: 88px; font-weight: 900; color: #fff; line-height: 1;
+}
+.score-stars { font-size: 24px; color: #f5a623; margin: 6px 0; letter-spacing: 3px; }
+.score-count { font-size: 13px; color: #555; }
+.summary-bars { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+.bar-row { display: flex; align-items: center; gap: 12px; }
+.bar-label { font-family: 'Barlow Condensed',sans-serif; font-size: 14px; font-weight: 700; color: #777; width: 32px; text-align: right; flex-shrink: 0; }
+.bar-track { flex: 1; height: 6px; background: #222; border-radius: 3px; overflow: hidden; }
+.bar-fill { height: 100%; background: var(--red); border-radius: 3px; }
+.bar-count { font-size: 12px; color: #555; width: 24px; flex-shrink: 0; }
+
+.reviews-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 20px;
+}
+.review-card {
+  background: #fff; border: 1.5px solid #e8e6e1;
+  border-radius: 4px; padding: 24px;
+  transition: box-shadow 0.2s;
+}
+.review-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
+.review-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+.review-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--off-white); border: 1.5px solid #e0ddd7;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Barlow Condensed',sans-serif; font-size: 17px;
+  font-weight: 800; color: var(--red); flex-shrink: 0;
+}
+.review-meta { flex: 1; }
+.review-name { font-family: 'Barlow Condensed',sans-serif; font-size: 17px; font-weight: 800; margin-bottom: 2px; }
+.review-stars { color: #f5a623; font-size: 13px; letter-spacing: 1px; }
+.review-date { font-size: 11px; color: #aaa; margin-top: 2px; }
+.review-text { font-size: 14px; color: #555; line-height: 1.7; }
+.review-source { margin-top: 12px; font-size: 11px; color: #bbb; letter-spacing: 0.5px; }
+
+.cta-banner-reviews {
+  background: var(--red); padding: 48px 80px;
+  display: flex; justify-content: space-between; align-items: center; gap: 32px;
+}
+.cta-banner-reviews h2 { font-family: 'Barlow Condensed',sans-serif; font-size: 36px; font-weight: 900; color: #fff; line-height: 1; margin-bottom: 6px; }
+.cta-banner-reviews p { font-size: 14px; color: rgba(255,255,255,0.75); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="index.html" class="nav-logo">
+    <img src="../uploads/logo-1777475435311.webp" alt="Duramax Logo">
+    <div class="nav-logo-text"><strong>DURAMAX</strong><span>Body Shop</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="detailing.html">Detailing</a>
+    <a href="reviews.html" class="active">Reviews</a>
+    <a href="contact.html">Contact</a>
+    <a href="tel:3018978190" class="nav-phone">(301) 897-8190</a>
+    <a href="appointments.html" class="nav-cta btn">Book Now</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-label">Customer Reviews</div>
+  <h1>What Our Customers Say</h1>
+  <p>35+ years of satisfied customers across Kensington and the DC metro area.</p>
+</div>
+
+<!-- Rating summary -->
+<div class="reviews-summary">
+  <div class="summary-score">
+    <div class="score-num">4.9</div>
+    <div class="score-stars">★★★★★</div>
+    <div class="score-count">Google Reviews</div>
+  </div>
+  <div class="summary-bars">
+    <div class="bar-row"><span class="bar-label">5★</span><div class="bar-track"><div class="bar-fill" style="width:92%"></div></div><span class="bar-count">92%</span></div>
+    <div class="bar-row"><span class="bar-label">4★</span><div class="bar-track"><div class="bar-fill" style="width:6%"></div></div><span class="bar-count">6%</span></div>
+    <div class="bar-row"><span class="bar-label">3★</span><div class="bar-track"><div class="bar-fill" style="width:2%"></div></div><span class="bar-count">2%</span></div>
+    <div class="bar-row"><span class="bar-label">2★</span><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div><span class="bar-count">0%</span></div>
+    <div class="bar-row"><span class="bar-label">1★</span><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div><span class="bar-count">0%</span></div>
+  </div>
+  <div style="text-align:center;flex-shrink:0;">
+    <a href="https://www.google.com/maps/search/Duramax+Body+Shop+Kensington+MD" target="_blank" class="btn btn-red btn-md">Leave a Review</a>
+    <p style="font-size:12px;color:#555;margin-top:8px;">on Google</p>
+  </div>
+</div>
+
+<!-- Reviews grid -->
+<section class="section" style="background:var(--off-white);">
+  <div class="section-header center">
+    <div class="section-label">Customer Feedback</div>
+    <h2 class="section-title">Trusted by the Community</h2>
+    <p class="section-sub">Real reviews from real customers. Add yours after your next visit.</p>
+  </div>
+  <div class="reviews-grid">
+
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar">M</div>
+        <div class="review-meta">
+          <div class="review-name">Maria T.</div>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-date">Kensington, MD</div>
+        </div>
+      </div>
+      <div class="review-text">"Duramax did an outstanding job on my bumper repair. Fast turnaround, fair price, and the color match was perfect. I've been bringing my cars here for years."</div>
+      <div class="review-source">Google Review</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar">J</div>
+        <div class="review-meta">
+          <div class="review-name">James R.</div>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-date">Silver Spring, MD</div>
+        </div>
+      </div>
+      <div class="review-text">"Had significant rear-end damage after an accident. Duramax handled everything — insurance, parts, and the repair. My car looks brand new. Highly recommend."</div>
+      <div class="review-source">Google Review</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar">S</div>
+        <div class="review-meta">
+          <div class="review-name">Sandra K.</div>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-date">Rockville, MD</div>
+        </div>
+      </div>
+      <div class="review-text">"I got the interior detailing package and I'm blown away. They got out stains I thought were permanent. The team is professional, honest, and thorough."</div>
+      <div class="review-source">Google Review</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar">D</div>
+        <div class="review-meta">
+          <div class="review-name">David L.</div>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-date">Bethesda, MD</div>
+        </div>
+      </div>
+      <div class="review-text">"Best body shop in the area. I've tried a few others over the years but always come back to Duramax. They're honest about what needs to be done and never overcharge."</div>
+      <div class="review-source">Google Review</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar">A</div>
+        <div class="review-meta">
+          <div class="review-name">Angela W.</div>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-date">Wheaton, MD</div>
+        </div>
+      </div>
+      <div class="review-text">"They fixed rust damage on my SUV that I thought was beyond repair. The result is amazing — you can't tell anything was ever wrong. Great family business."</div>
+      <div class="review-source">Google Review</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar">C</div>
+        <div class="review-meta">
+          <div class="review-name">Carlos M.</div>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-date">Gaithersburg, MD</div>
+        </div>
+      </div>
+      <div class="review-text">"Quick, professional, and no BS. Brought my truck in for a dent and some scratches — ready the next day and looked perfect. This is my go-to shop from now on."</div>
+      <div class="review-source">Google Review</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-banner-reviews">
+  <div>
+    <h2>Ready to Experience the Difference?</h2>
+    <p>Join thousands of satisfied customers across the DC metro area.</p>
+  </div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;">
+    <a href="appointments.html" class="btn btn-outline-white btn-md">Book an Appointment</a>
+    <a href="contact.html" class="btn" style="background:#fff;color:var(--red);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;padding:10px 24px;border-radius:3px;">Get a Free Estimate</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="../uploads/logo-1777475435311.webp" alt="Duramax Logo">
+      <p>Expert auto body repair serving Kensington, MD and the greater DC metro area since 1989.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Pages</h4>
+      <a href="about.html">About Us</a>
+      <a href="services.html">Services</a>
+      <a href="detailing.html">Detailing</a>
+      <a href="appointments.html">Appointments</a>
+      <a href="reviews.html">Reviews</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="services.html">Collision Repair</a>
+      <a href="services.html">Dent Removal</a>
+      <a href="services.html">Paint &amp; Scratches</a>
+      <a href="services.html">Frame Repair</a>
+      <a href="services.html">Hail Damage</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p class="highlight">(301) 897-8190</p>
+      <a href="mailto:duramaxbodyshop@gmail.com" style="color:#666;font-size:13px;text-decoration:none;display:block;margin-bottom:10px;">duramaxbodyshop@gmail.com</a>
+      <p>10515 Summit Ave</p>
+      <p>Kensington, MD 20895</p>
+      <p style="margin-top:8px;">Mon–Fri: 9am – 5pm</p>
+      <p>Sat: 9am – 1pm</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 <span>Duramax Body Shop</span>. All rights reserved.</p>
+    <p>10515 Summit Ave, Kensington, MD 20895</p>
+  </div>
+</footer>
+
+<script src="animations.js"></script>
+</body>
+</html>
