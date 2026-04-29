@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Car Detailing — Duramax Body Shop</title>
+<link rel="stylesheet" href="shared.css">
+<link rel="stylesheet" href="animations.css">
+<style>
+.disclaimer {
+  background: #fffbf0; border-left: 3px solid #C8A54A;
+  padding: 14px 20px; border-radius: 0 4px 4px 0;
+  margin-bottom: 40px;
+  font-size: 13px; color: #666; line-height: 1.7;
+}
+.disclaimer strong { color: #555; }
+
+.packages-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 28px;
+  align-items: start;
+}
+.pkg-card {
+  border-radius: 4px; overflow: hidden;
+  border: 2px solid #e8e6e1; background: #fff;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.pkg-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+.pkg-card.featured { border-color: var(--red); }
+.pkg-featured-badge {
+  background: var(--red); color: #fff;
+  font-family: 'Barlow Condensed',sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: 1px;
+  padding: 5px 0; text-align: center; text-transform: uppercase; letter-spacing: 2px;
+}
+.pkg-header { padding: 24px 24px 16px; border-bottom: 1.5px solid #f0eeea; }
+.pkg-header.featured-bg { background: var(--red); border-bottom-color: var(--red-dark); }
+.pkg-name { font-family: 'Barlow Condensed',sans-serif; font-size: 28px; font-weight: 900; line-height: 1; margin-bottom: 2px; }
+.pkg-name.white { color: #fff; }
+.pkg-duration { font-size: 12px; color: var(--mid); }
+.pkg-duration.white { color: rgba(255,255,255,0.7); }
+
+.pkg-prices {
+  padding: 16px 24px; background: var(--off-white);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+}
+.pkg-price-item { text-align: center; }
+.pkg-price-type { font-size: 11px; color: var(--mid); margin-bottom: 2px; letter-spacing: 0.5px; }
+.pkg-price-val { font-family: 'Barlow Condensed',sans-serif; font-size: 24px; font-weight: 900; color: var(--text); line-height: 1; }
+.pkg-price-val .from { font-size: 12px; font-weight: 400; color: var(--mid); font-family: 'Barlow',sans-serif; }
+
+.pkg-body { padding: 20px 24px 24px; }
+.pkg-includes { font-family: 'Barlow Condensed',sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--mid); text-transform: uppercase; margin-bottom: 12px; }
+.pkg-feature { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 1px solid #f5f4f0; font-size: 13px; color: var(--text); }
+.pkg-feature:last-of-type { border-bottom: none; margin-bottom: 12px; }
+.pkg-check { color: var(--red); font-weight: 700; font-size: 13px; margin-top: 1px; flex-shrink: 0; }
+
+.addons { margin-top: 16px; padding-top: 16px; border-top: 1.5px dashed #e0ddd7; }
+.addons-title { font-family: 'Barlow Condensed',sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; color: #aaa; text-transform: uppercase; margin-bottom: 10px; }
+.addon-item { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid #f5f4f0; }
+.addon-item:last-child { border-bottom: none; }
+.addon-name { font-size: 13px; color: #555; }
+.addon-price { font-family: 'Barlow Condensed',sans-serif; font-size: 14px; font-weight: 700; color: var(--text); white-space: nowrap; margin-left: 8px; }
+
+.pkg-book { margin-top: 20px; }
+
+/* Combo banner */
+.combo-banner {
+  background: var(--black); border-radius: 4px;
+  padding: 36px 48px; margin-top: 48px;
+  display: flex; justify-content: space-between; align-items: center; gap: 32px;
+  flex-wrap: wrap;
+}
+.combo-banner-text {}
+.combo-label { font-family: 'Barlow Condensed',sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 3px; color: var(--red); text-transform: uppercase; margin-bottom: 8px; }
+.combo-title { font-family: 'Barlow Condensed',sans-serif; font-size: 40px; font-weight: 900; color: #fff; line-height: 1; margin-bottom: 8px; }
+.combo-sub { font-size: 14px; color: #666; }
+.combo-prices { display: flex; gap: 32px; }
+.combo-price-item { text-align: center; }
+.combo-price-type { font-size: 12px; color: #555; margin-bottom: 4px; }
+.combo-price-val { font-family: 'Barlow Condensed',sans-serif; font-size: 36px; font-weight: 900; color: #fff; line-height: 1; }
+.combo-price-val span { font-size: 16px; color: #888; }
+
+/* Quote section */
+.quote-section {
+  background: var(--off-white); padding: 56px 80px;
+  text-align: center;
+}
+.quote-form {
+  max-width: 540px; margin: 32px auto 0;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.qf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.qf-field { display: flex; flex-direction: column; gap: 6px; }
+.qf-field label { font-family: 'Barlow Condensed',sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; color: #555; }
+.qf-field input, .qf-field select, .qf-field textarea {
+  border: 1.5px solid #ddd; border-radius: 3px;
+  padding: 10px 14px; font-family: 'Barlow',sans-serif; font-size: 14px;
+  color: var(--text); background: #fff; outline: none;
+  transition: border-color 0.15s;
+}
+.qf-field input:focus, .qf-field select:focus, .qf-field textarea:focus { border-color: var(--red); }
+#quote-success { display: none; background: #f0fff0; border: 1.5px solid #4caf50; border-radius: 4px; padding: 20px; margin-top: 16px; }
+#quote-success h3 { font-family: 'Barlow Condensed',sans-serif; font-size: 20px; font-weight: 800; color: #2e7d32; margin-bottom: 4px; }
+#quote-success p { font-size: 14px; color: #388e3c; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="index.html" class="nav-logo">
+    <img src="../uploads/logo-1777475435311.webp" alt="Duramax Logo">
+    <div class="nav-logo-text"><strong>DURAMAX</strong><span>Body Shop</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="detailing.html" class="active">Detailing</a>
+    <a href="reviews.html">Reviews</a>
+    <a href="contact.html">Contact</a>
+    <a href="tel:3018978190" class="nav-phone">(301) 897-8190</a>
+    <a href="appointments.html" class="nav-cta btn">Book Now</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-label">Car Detailing</div>
+  <h1>Make It Look<br/>Brand New</h1>
+  <p>Professional exterior and interior detailing. We restore the finish and deep-clean the cabin — so it feels like the day you drove it off the lot.</p>
+</div>
+
+<section class="section">
+  <div class="disclaimer">
+    <strong>* Price Disclaimer:</strong> The prices below represent typical rates for most vehicles. Your exact price depends on your vehicle's condition and any additional services requested. <a href="tel:3018978190" style="color:var(--red);">Call (301) 897-8190</a> or fill out the quote form below for a specific estimate.
+  </div>
+
+  <div class="packages-grid">
+
+    <!-- Exterior -->
+    <div class="pkg-card">
+      <div class="pkg-header">
+        <div class="pkg-name">Exterior</div>
+        <div class="pkg-duration">Approx. 1–2 hours</div>
+      </div>
+      <div class="pkg-prices">
+        <div class="pkg-price-item">
+          <div class="pkg-price-type">Coupe / Sedan</div>
+          <div class="pkg-price-val">$150</div>
+        </div>
+        <div class="pkg-price-item">
+          <div class="pkg-price-type">Truck / SUV / Van</div>
+          <div class="pkg-price-val">$200</div>
+        </div>
+      </div>
+      <div class="pkg-body">
+        <div class="pkg-includes">Package Includes</div>
+        <div class="pkg-feature"><span class="pkg-check">✓</span>Thorough hand wash &amp; dry</div>
+        <div class="pkg-feature"><span class="pkg-check">✓</span>Wheels &amp; tires cleaned, shined &amp; dressed</div>
+        <div class="pkg-feature"><span class="pkg-check">✓</span>Wheel wells deep cleaned</div>
+        <div class="pkg-feature"><span class="pkg-check">✓</span>Exterior windows &amp; mirrors cleaned</div>
+        <div class="pkg-feature"><span class="pkg-check">✓</span>Door jambs wiped down</div>
+        <div class="pkg-feature"><span class="pkg-check">✓</span>Spray sealant (1–3 months protection)</div>
+        <div class="addons">
+          <div class="addons-title">Optional Add-Ons</div>
+          <div class="addon-item"><span class="addon-name">Headlight restoration</span><span class="addon-price">$130</span></div>
+          <div class="addon-item"><span class="addon-name">Engine bay cleaning</span><span class="addon-price">$50</span></div>
+          <div class="addon-item"><span class="addon-name">Clay bar treatment</span><span class="addon-price">$50</span></div>
+          <div class="addon-item"><span class="addon-name">Ceramic coating</span><span class="addon-price">Contact us</span></div>
+        </div>
+        <div class="pkg-book">
+          <a href="tel:3018978190" class="btn btn-outline-red btn-sm" style="width:100%;text-align:center;display:block;">Call to Book — (301) 897-8190</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interior -->
+    <div class="pkg-card featured">
+      <div class="pkg-featured-badge">Most Requested</div>
+      <div class="pkg-header featured-bg">
+        <div class="pkg-name white">Interior</div>
+        <div class="pkg-duration white">Approx. 3–4 hours</div>
+      </div>
+      <div class="pkg-prices">
+        <div class="pkg-price-item">
+          <div class="pkg-price-type">1–2 Row Vehicles</div>
+          <div class="pkg-price-val">$150 <span class="from">+</span></div>
+        </div>
+        <div class="pkg-price-item">
+          <div class="pkg-price-type">3-Row SUV / Van</div>
+          <div class="pkg-price-val">$200 <span class="from">+</span></div>
+        </div>
+      </div>
+      <div class="pkg-body">
+        <div class="pkg-includes">Package Includes</div>
+        <div class="pkg-feature"><span class="pkg-check">✓</span>Extensive vacuuming throughout</div>
+        <div class="pkg-feature"><span class="pkg-check">✓</span>Trunk vacuumed</div>
+        <div class="pkg-feature"><span class="pkg-check">✓</span>Rubber mats washed, floor mats steamed</div>
+        <div class="pkg-feature"><span class="pkg-check">✓</span>Leather seats cleaned &amp; conditioned</div>
+        <div class="pkg-feature"><span class="pkg-check">✓</span>All plastics wiped down</div>
+        <div class="pkg-feature"><span class="pkg-check">✓</span>Vents cleaned</div>
+        <div class="pkg-feature"><span class="pkg-check">✓</span>Center console &amp; doors steam cleaned</div>
+        <div class="pkg-feature"><span class="pkg-check">✓</span>Brake &amp; gas pedal steamed</div>
+        <div class="pkg-feature"><span class="pkg-check">✓</span>Interior windows &amp; mirrors cleaned</div>
+        <div class="addons">
+          <div class="addons-title">Optional Add-Ons</div>
+          <div class="addon-item"><span class="addon-name">Carpet shampooing &amp; stain extraction</span><span class="addon-price">$100</span></div>
+          <div class="addon-item"><span class="addon-name">Pet hair removal</span><span class="addon-price">$0–$100</span></div>
+          <div class="addon-item"><span class="addon-name">Headliner shampoo &amp; stain extraction</span><span class="addon-price">$150</span></div>
+        </div>
+        <div class="pkg-book">
+          <a href="tel:3018978190" class="btn btn-red btn-sm" style="width:100%;text-align:center;display:block;">Call to Book — (301) 897-8190</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quote form card -->
+    <div class="pkg-card" style="border-style:dashed;">
+      <div class="pkg-header">
+        <div class="pkg-name">Custom Quote</div>
+        <div class="pkg-duration">We'll reach out within 24 hrs</div>
+      </div>
+      <div class="pkg-body">
+        <p style="font-size:13px;color:var(--mid);margin-bottom:20px;line-height:1.7;">Not sure which package fits? Send us your info and we'll put together a tailored estimate.</p>
+        <form onsubmit="handleQuote(event)" style="display:flex;flex-direction:column;gap:10px;">
+          <input type="text" placeholder="Your Name" required style="border:1.5px solid #ddd;border-radius:3px;padding:9px 12px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;">
+          <input type="email" placeholder="Email Address" required style="border:1.5px solid #ddd;border-radius:3px;padding:9px 12px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;">
+          <input type="tel" placeholder="Phone Number" style="border:1.5px solid #ddd;border-radius:3px;padding:9px 12px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;">
+          <input type="text" placeholder="Vehicle Year, Make &amp; Model" required style="border:1.5px solid #ddd;border-radius:3px;padding:9px 12px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;">
+          <select required style="border:1.5px solid #ddd;border-radius:3px;padding:9px 12px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;">
+            <option value="">Service Type…</option>
+            <option>Exterior Detailing</option>
+            <option>Interior Detailing</option>
+            <option>Exterior + Interior Combo</option>
+            <option>Not sure — help me choose</option>
+          </select>
+          <button type="submit" class="btn btn-red btn-sm" style="width:100%;">Get Free Quote</button>
+        </form>
+        <div id="quote-success" style="margin-top:12px;">
+          <h3>✓ Sent!</h3>
+          <p>We'll be in touch within 24 hours.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Combo banner -->
+  <div class="combo-banner">
+    <div class="combo-banner-text">
+      <div class="combo-label">Best Value</div>
+      <div class="combo-title">Exterior + Interior<br/>Combo Deal</div>
+      <div class="combo-sub">Get both services together and save.</div>
+    </div>
+    <div class="combo-prices">
+      <div class="combo-price-item">
+        <div class="combo-price-type">Coupe / Sedan</div>
+        <div class="combo-price-val">$250 <span>+</span></div>
+      </div>
+      <div class="combo-price-item">
+        <div class="combo-price-type">Truck / SUV / Van</div>
+        <div class="combo-price-val">$300 <span>+</span></div>
+      </div>
+    </div>
+    <a href="tel:3018978190" class="btn btn-red btn-lg">Call to Book</a>
+  </div>
+
+</section>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="../uploads/logo-1777475435311.webp" alt="Duramax Logo">
+      <p>Expert auto body repair serving Kensington, MD and the greater DC metro area since 1989.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Pages</h4>
+      <a href="about.html">About Us</a>
+      <a href="services.html">Services</a>
+      <a href="detailing.html">Detailing</a>
+      <a href="appointments.html">Appointments</a>
+      <a href="reviews.html">Reviews</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Detailing</h4>
+      <a href="detailing.html">Exterior Detail</a>
+      <a href="detailing.html">Interior Detail</a>
+      <a href="detailing.html">Combo Package</a>
+      <a href="detailing.html">Custom Quote</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p class="highlight">(301) 897-8190</p>
+      <a href="mailto:duramaxbodyshop@gmail.com" style="color:#666;font-size:13px;text-decoration:none;display:block;margin-bottom:10px;">duramaxbodyshop@gmail.com</a>
+      <p>10515 Summit Ave</p>
+      <p>Kensington, MD 20895</p>
+      <p style="margin-top:8px;">Mon–Fri: 9am – 5pm</p>
+      <p>Sat: 9am – 1pm</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 <span>Duramax Body Shop</span>. All rights reserved.</p>
+    <p>10515 Summit Ave, Kensington, MD 20895</p>
+  </div>
+</footer>
+
+<script>
+function handleQuote(e) {
+  e.preventDefault();
+  e.target.style.display = 'none';
+  document.getElementById('quote-success').style.display = 'block';
+}
+</script>
+<script src="animations.js"></script>
+</body>
+</html>
