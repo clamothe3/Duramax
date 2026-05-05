@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Duramax Body Shop — Kensington, MD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & ROOT ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --red: #CC0000;
+  --red-dark: #a30000;
+  --black: #0a0a0a;
+  --dark: #111;
+  --dark2: #1a1a1a;
+  --mid: #888;
+  --light: rgba(255,255,255,0.06);
+  --border: rgba(255,255,255,0.08);
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-head: 'Barlow Condensed', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--black);
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* ── NOISE TEXTURE ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── NAV ── */
+.site-nav {
+  position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
+  z-index: 1000;
+  width: min(900px, calc(100vw - 48px));
+  background: rgba(15,15,15,0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 10px 10px 10px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; flex-shrink: 0;
+}
+.nav-logo img {
+  width: 36px; height: 36px; border-radius: 50%; object-fit: cover;
+}
+.nav-logo-text strong {
+  font-family: var(--font-head); font-size: 16px; font-weight: 800;
+  color: #fff; letter-spacing: 1px; display: block;
+}
+.nav-logo-text span {
+  font-size: 9px; color: var(--mid); letter-spacing: 2px;
+  text-transform: uppercase; display: block;
+}
+
+.nav-links {
+  display: flex; align-items: center; gap: 2px;
+}
+.nav-links a {
+  font-family: var(--font-body); font-size: 13px; font-weight: 500;
+  color: rgba(255,255,255,0.6); text-decoration: none;
+  padding: 7px 14px; border-radius: 100px;
+  transition: all 0.2s;
+}
+.nav-links a:hover { color: #fff; background: var(--light); }
+.nav-phone {
+  font-family: var(--font-head); font-size: 14px; font-weight: 700;
+  color: rgba(255,255,255,0.7) !important;
+}
+.nav-cta {
+  background: var(--red) !important;
+  color: #fff !important;
+  font-family: var(--font-head) !important;
+  font-size: 14px !important; font-weight: 700 !important;
+  padding: 9px 22px !important; border-radius: 100px !important;
+  letter-spacing: 0.3px;
+  box-shadow: 0 0 20px rgba(204,0,0,0.3);
+  transition: all 0.2s !important;
+}
+.nav-cta:hover { background: var(--red-dark) !important; transform: scale(1.02); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 120px 40px 60px;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(204,0,0,0.08) 0%, transparent 70%),
+              radial-gradient(ellipse 60% 40% at 20% 80%, rgba(204,0,0,0.05) 0%, transparent 60%);
+}
+
+.hero-eyebrow {
+  font-family: var(--font-head); font-size: 11px; font-weight: 600;
+  letter-spacing: 5px; color: var(--red); text-transform: uppercase;
+  margin-bottom: 24px; position: relative; z-index: 1;
+  opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(64px, 10vw, 130px);
+  line-height: 0.9; color: #fff;
+  letter-spacing: 2px;
+  position: relative; z-index: 1;
+  opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+  text-wrap: balance;
+}
+
+.hero h1 em {
+  color: var(--red); font-style: normal;
+  display: block;
+}
+
+.hero-sub {
+  font-size: clamp(14px, 1.5vw, 17px); color: rgba(255,255,255,0.5);
+  max-width: 540px; margin: 24px auto 0; line-height: 1.7;
+  position: relative; z-index: 1;
+  opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+}
+
+.hero-actions {
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+  margin-top: 36px; position: relative; z-index: 1;
+  opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+}
+
+/* ── CAROUSEL ── */
+.hero-carousel {
+  width: 100vw; margin-top: 60px;
+  position: relative; z-index: 1;
+  opacity: 0; animation: fadeUp 0.8s 1s forwards;
+}
+
+.carousel-track {
+  display: flex; gap: 16px;
+  animation: scroll 30s linear infinite;
+  width: max-content;
+}
+
+.carousel-track:hover { animation-play-state: paused; }
+
+.carousel-item {
+  flex-shrink: 0;
+  width: 280px; height: 200px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  position: relative;
+}
+
+.carousel-item img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.5s ease;
+  filter: brightness(0.85);
+}
+
+.carousel-item:hover img { transform: scale(1.05); filter: brightness(1); }
+
+.carousel-mask {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ── TRUST BAR ── */
+.trust-bar {
+  background: var(--red);
+  padding: 12px 40px;
+  display: flex; justify-content: space-around; align-items: center;
+  flex-wrap: wrap; gap: 8px;
+  margin-top: 0;
+}
+.trust-bar span {
+  font-family: var(--font-head); font-size: 13px; font-weight: 600;
+  color: #fff; letter-spacing: 0.5px;
+  display: flex; align-items: center; gap: 6px;
+}
+.trust-bar span::before { content: '✓'; font-weight: 900; }
+
+/* ── SECTION ── */
+.section { padding: 100px 80px; }
+.section-sm { padding: 60px 80px; }
+
+.section-label {
+  font-family: var(--font-head); font-size: 11px; font-weight: 700;
+  color: var(--red); letter-spacing: 4px; text-transform: uppercase;
+  margin-bottom: 12px; display: block;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5vw, 72px);
+  line-height: 0.95; letter-spacing: 1px;
+  color: #fff; margin-bottom: 16px;
+}
+
+.section-title.dark { color: #111; }
+
+.section-sub {
+  font-size: 15px; color: var(--mid); line-height: 1.7;
+}
+
+/* ── SERVICES SECTION ── */
+.services-section {
+  background: var(--dark);
+  position: relative; overflow: hidden;
+}
+
+.services-section::before {
+  content: 'SERVICES';
+  position: absolute; right: -40px; top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  font-family: var(--font-display); font-size: 160px;
+  color: rgba(255,255,255,0.02); letter-spacing: 10px;
+  white-space: nowrap; pointer-events: none;
+}
+
+.services-header {
+  text-align: center; margin-bottom: 60px;
+}
+
+.services-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  position: relative; z-index: 1;
+}
+
+.service-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 22px;
+  text-align: center;
+  transition: all 0.3s;
+  text-decoration: none; color: inherit;
+  display: block;
+  position: relative; overflow: hidden;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(204,0,0,0.05) 0%, transparent 60%);
+  opacity: 0; transition: opacity 0.3s;
+  border-radius: 16px;
+}
+
+.service-card:hover {
+  border-color: rgba(204,0,0,0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(204,0,0,0.1);
+}
+
+.service-card:hover::before { opacity: 1; }
+
+.service-card-icon {
+  width: 52px; height: 52px; border-radius: 14px;
+  background: rgba(204,0,0,0.1);
+  border: 1px solid rgba(204,0,0,0.2);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px; color: var(--red);
+  transition: all 0.3s;
+}
+
+.service-card:hover .service-card-icon {
+  background: rgba(204,0,0,0.2);
+}
+
+.service-card h3 {
+  font-family: var(--font-head); font-size: 16px; font-weight: 700;
+  color: #fff; margin-bottom: 6px;
+}
+
+.service-card p { font-size: 12px; color: #666; line-height: 1.5; }
+
+/* ── ABOUT STRIP ── */
+.about-strip {
+  background: #fff;
+  padding: 100px 80px;
+  display: flex; gap: 80px; align-items: center;
+}
+
+.about-strip-img {
+  flex: 0 0 480px; height: 360px; border-radius: 20px; overflow: hidden;
+  position: relative;
+}
+
+.about-strip-img .img-placeholder {
+  width: 100%; height: 100%;
+  background: repeating-linear-gradient(-45deg, #ddd 0px, #ddd 4px, #e8e8e8 4px, #e8e8e8 12px);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-body); font-size: 12px; color: #999;
+}
+
+.about-strip-content .section-title { color: #111; }
+.about-strip-content .section-sub { color: #666; margin-bottom: 28px; line-height: 1.8; }
+
+.about-strip-stats {
+  display: flex; gap: 40px; margin-top: 40px;
+  padding-top: 40px; border-top: 1px solid #eee;
+}
+
+.stat-num {
+  font-family: var(--font-display); font-size: 52px;
+  color: var(--red); line-height: 1;
+}
+.stat-label { font-size: 12px; color: #999; margin-top: 4px; letter-spacing: 0.5px; }
+
+/* ── WHY CHOOSE ── */
+.why-section { background: var(--black); }
+
+.why-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  margin-top: 60px;
+}
+
+.why-card {
+  background: var(--dark);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 40px;
+  position: relative; overflow: hidden;
+  transition: all 0.3s;
+}
+
+.why-card.highlighted {
+  background: linear-gradient(135deg, rgba(204,0,0,0.12) 0%, rgba(204,0,0,0.04) 100%);
+  border-color: rgba(204,0,0,0.25);
+}
+
+.why-card:hover {
+  border-color: rgba(204,0,0,0.3);
+  transform: translateY(-3px);
+}
+
+.why-num {
+  font-family: var(--font-display); font-size: 80px;
+  color: rgba(255,255,255,0.04); line-height: 1;
+  position: absolute; top: 20px; right: 24px;
+}
+
+.why-card h3 {
+  font-family: var(--font-head); font-size: 22px; font-weight: 800;
+  color: #fff; margin-bottom: 10px;
+}
+
+.why-card p { font-size: 14px; color: #666; line-height: 1.7; }
+
+.why-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: rgba(204,0,0,0.1); border: 1px solid rgba(204,0,0,0.2);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--red); margin-bottom: 20px;
+}
+
+/* ── CTA ROW ── */
+.cta-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+}
+.cta-block {
+  padding: 80px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.cta-block.dark { background: var(--dark2); }
+.cta-block.red {
+  background: var(--red);
+  position: relative; overflow: hidden;
+}
+.cta-block.red::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(255,255,255,0.05) 0%, transparent 70%);
+}
+.cta-block h2 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 3vw, 54px); line-height: 0.95; color: #fff;
+  letter-spacing: 1px;
+}
+.cta-block p { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+.cta-block .section-label { color: rgba(255,255,255,0.5); }
+
+/* ── FOOTER ── */
+.site-footer {
+  background: var(--dark); border-top: 1px solid var(--border);
+  padding: 60px 80px 32px;
+}
+
+.footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px; margin-bottom: 48px;
+}
+
+.footer-brand img { width: 52px; height: 52px; border-radius: 50%; margin-bottom: 16px; }
+.footer-brand p { font-size: 13px; color: #555; line-height: 1.7; max-width: 200px; }
+
+.footer-col h4 {
+  font-family: var(--font-head); font-size: 11px; font-weight: 700;
+  color: #fff; letter-spacing: 3px; text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.footer-col a, .footer-col p {
+  display: block; font-size: 13px; color: #555;
+  text-decoration: none; margin-bottom: 10px; transition: color 0.2s;
+  line-height: 1;
+}
+.footer-col a:hover { color: var(--red); }
+.footer-col .highlight { color: #888; font-weight: 500; }
+
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-bottom p { font-size: 12px; color: #444; }
+.footer-bottom span { color: var(--red); }
+
+/* ── BUTTONS ── */
+.btn {
+  display: inline-block; text-decoration: none;
+  font-family: var(--font-head); font-weight: 700; letter-spacing: 0.5px;
+  border-radius: 100px; transition: all 0.2s;
+  border: 2px solid transparent; text-align: center; cursor: pointer;
+}
+.btn-lg { font-size: 16px; padding: 14px 36px; }
+.btn-md { font-size: 14px; padding: 11px 28px; }
+.btn-sm { font-size: 12px; padding: 8px 18px; }
+.btn-red {
+  background: var(--red); color: #fff; border-color: var(--red);
+  box-shadow: 0 4px 20px rgba(204,0,0,0.3);
+}
+.btn-red:hover { background: var(--red-dark); border-color: var(--red-dark); transform: scale(1.02); }
+.btn-outline-white { background: transparent; color: #fff; border-color: rgba(255,255,255,0.25); }
+.btn-outline-white:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); }
+.btn-outline-red { background: transparent; color: var(--red); border-color: var(--red); }
+.btn-outline-red:hover { background: var(--red); color: #fff; }
+.btn-dark { background: #111; color: #fff; border-color: #222; }
+.btn-dark:hover { background: #000; }
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── HERO SCROLL INDICATOR ── */
+.hero-scroll {
+  position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  opacity: 0; animation: fadeUp 1s 1.4s forwards;
+}
+.hero-scroll span {
+  font-family: var(--font-head); font-size: 10px; color: #444; letter-spacing: 3px;
+}
+.scroll-line {
+  width: 1px; height: 48px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.15), transparent);
+  animation: scrollPulse 2s infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+</style>
+</head>
+<body>
+<script src="transition.js"></script>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <a href="index.html" class="nav-logo">
+    <img src="../uploads/logo-1777475435311.webp" alt="Duramax Logo">
+    <div class="nav-logo-text">
+      <strong>DURAMAX</strong>
+      <span>Body Shop</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="detailing.html">Detailing</a>
+    <a href="reviews.html">Reviews</a>
+    <a href="contact.html">Contact</a>
+    <a href="tel:3018978190" class="nav-phone">(301) 897-8190</a>
+    <a href="appointments.html" class="nav-cta btn">Book Now</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div style="
+  position: absolute; inset: 0; z-index: 0;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+">
+ <img src="logo-1777475435311.webp" alt="" style="
+  width: min(600px, 80vw);
+  opacity: 0.12;
+  user-select: none;
+">
+</div>
+  <div class="hero-eyebrow">Kensington, MD &nbsp;·&nbsp; Est. 1989 &nbsp;·&nbsp; Family Owned</div>
+  <h1>Kensington's Most<br/>Trusted<br/><em>Body Shop</em></h1>
+  <p class="hero-sub">35 years of family‑owned craftsmanship. From precision collision repair to showroom‑level detailing — your vehicle deserves the best.</p>
+  <div class="hero-actions">
+    <a href="appointments.html" class="btn btn-red btn-lg">Get a Free Estimate</a>
+    <a href="services.html" class="btn btn-outline-white btn-lg">View All Services</a>
+  </div>
+  <div class="hero-scroll">
+    <span>SCROLL</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- PHOTO CAROUSEL -->
+<div class="hero-carousel">
+  <div class="carousel-mask">
+    <div class="carousel-track">
+      <!-- First set -->
+      <div class="carousel-item">
+        <img src="images/bmw-m3.jpg" alt="BMW M3 detailing">
+      </div>
+      <div class="carousel-item">
+        <img src="images/after-interior.jpg" alt="Clean interior detail">
+      </div>
+      <div class="carousel-item">
+        <img src="images/bmw-interior.jpg" alt="BMW luxury interior">
+      </div>
+      <div class="carousel-item">
+        <img src="images/bmw-console.jpg" alt="BMW center console detail">
+      </div>
+      <div class="carousel-item">
+        <img src="images/technician.jpg" alt="Duramax technician at work">
+      </div>
+      <div class="carousel-item">
+        <img src="images/mercedes-classic.jpg" alt="Classic Mercedes restoration">
+      </div>
+      <div class="carousel-item">
+        <img src="images/paint-booth.jpg" alt="Paint booth refinishing">
+      </div>
+      <!-- Duplicate for seamless loop -->
+      <div class="carousel-item">
+        <img src="images/bmw-m3.jpg" alt="BMW M3 detailing">
+      </div>
+      <div class="carousel-item">
+        <img src="images/after-interior.jpg" alt="Clean interior detail">
+      </div>
+      <div class="carousel-item">
+        <img src="images/bmw-interior.jpg" alt="BMW luxury interior">
+      </div>
+      <div class="carousel-item">
+        <img src="images/bmw-console.jpg" alt="BMW center console detail">
+      </div>
+      <div class="carousel-item">
+        <img src="images/technician.jpg" alt="Duramax technician at work">
+      </div>
+      <div class="carousel-item">
+        <img src="images/mercedes-classic.jpg" alt="Classic Mercedes restoration">
+      </div>
+      <div class="carousel-item">
+        <img src="images/paint-booth.jpg" alt="Paint booth refinishing">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <span>35+ Years in Business</span>
+  <span>Free Estimates</span>
+  <span>All Makes &amp; Models</span>
+  <span>Certified Technicians</span>
+  <span>Lifetime Warranty on Repairs</span>
+</div>
+
+<!-- SERVICES -->
+<section class="section services-section">
+  <div class="services-header reveal">
+    <span class="section-label">What We Do</span>
+    <h2 class="section-title">Full-Service Auto Care</h2>
+    <p class="section-sub" style="max-width:480px;margin:0 auto;">From minor dents to major collision work — we handle it all with precision and care.</p>
+  </div>
+  <div class="services-grid">
+    <a href="services.html" class="service-card reveal reveal-delay-1">
+      <div class="service-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3v-5l2-5h14l2 5v5h-2"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/><path d="M5 12h14"/></svg></div>
+      <h3>Collision Repair</h3>
+      <p>Expert structural and cosmetic repair after any accident.</p>
+    </a>
+    <a href="services.html" class="service-card reveal reveal-delay-2">
+      <div class="service-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M9 12c0-1.7 1.3-3 3-3s3 1.3 3 3"/></svg></div>
+      <h3>Dent Removal</h3>
+      <p>Paintless and traditional dent repair for all panel types.</p>
+    </a>
+    <a href="services.html" class="service-card reveal reveal-delay-3">
+      <div class="service-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18.37 2.63 14 7l-1.59-1.59a2 2 0 0 0-2.82 0L8 7l9 9 1.59-1.59a2 2 0 0 0 0-2.82L17 10l4.37-4.37a2.12 2.12 0 1 0-3-3Z"/><path d="M9 8c-2 2.5-2 6-2 6s3.5 0 6-2"/></svg></div>
+      <h3>Paint &amp; Scratches</h3>
+      <p>Factory-matched color paint and scratch restoration.</p>
+    </a>
+    <a href="services.html" class="service-card reveal reveal-delay-4">
+      <div class="service-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="8" y1="7" x2="8" y2="17"/><line x1="16" y1="7" x2="16" y2="17"/><line x1="3" y1="7" x2="3" y2="17"/><line x1="21" y1="7" x2="21" y2="17"/></svg></div>
+      <h3>Frame Straightening</h3>
+      <p>Precision frame and unibody alignment using modern equipment.</p>
+    </a>
+    <a href="services.html" class="service-card reveal reveal-delay-1">
+      <div class="service-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"/><line x1="8" y1="16" x2="8" y2="19"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="16" y1="16" x2="16" y2="19"/></svg></div>
+      <h3>Hail Damage Repair</h3>
+      <p>Restore your vehicle after storm and hail damage.</p>
+    </a>
+    <a href="services.html" class="service-card reveal reveal-delay-2">
+      <div class="service-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <h3>Rust Repair</h3>
+      <p>Remove and treat rust before it spreads further.</p>
+    </a>
+    <a href="services.html" class="service-card reveal reveal-delay-3">
+      <div class="service-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+      <h3>Mechanical Service</h3>
+      <p>Brakes, engine, transmission, oil changes &amp; more.</p>
+    </a>
+    <a href="detailing.html" class="service-card reveal reveal-delay-4">
+      <div class="service-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="19.07" y1="4.93" x2="16.24" y2="7.76"/><line x1="7.76" y1="16.24" x2="4.93" y2="19.07"/></svg></div>
+      <h3>Car Detailing</h3>
+      <p>Interior &amp; exterior detailing — Basic to Elite.</p>
+    </a>
+  </div>
+  <div style="text-align:center;margin-top:48px;" class="reveal">
+    <a href="services.html" class="btn btn-outline-white btn-md">View All 30+ Services →</a>
+  </div>
+</section>
+
+<!-- ABOUT STRIP -->
+<div class="about-strip">
+  <div class="about-strip-img reveal">
+    <img src="duramaxbuild.png" alt="Duramax Body Shop" style="width:100%;height:100%;object-fit:cover;display:block;">
+  </div>
+  <div class="about-strip-content reveal reveal-delay-2">
+    <span class="section-label" style="color:var(--red)">About Duramax</span>
+    <h2 class="section-title dark">Family-Owned.<br/>Community-Trusted.</h2>
+    <p class="about-strip-content .section-sub" style="color:#666;line-height:1.8;margin-bottom:28px;">Founded in 1989, Duramax Body Shop has grown into one of Maryland's most trusted auto body repair centers. Our certified technicians bring decades of hands-on experience to every job — treating every car as if it were their own.</p>
+    <a href="about.html" class="btn btn-dark btn-md">Our Story →</a>
+    <div class="about-strip-stats">
+      <div>
+        <div class="stat-num">35+</div>
+        <div class="stat-label">Years in Business</div>
+      </div>
+      <div>
+        <div class="stat-num">5K+</div>
+        <div class="stat-label">Vehicles Repaired</div>
+      </div>
+      <div>
+        <div class="stat-num">★4.9</div>
+        <div class="stat-label">Google Rating</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY CHOOSE US -->
+<section class="section why-section">
+  <div style="text-align:center;margin-bottom:20px;" class="reveal">
+    <span class="section-label">Why Duramax</span>
+    <h2 class="section-title">Why Customers<br/>Choose Us</h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-card highlighted reveal reveal-delay-1">
+      <div class="why-num">01</div>
+      <div class="why-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <h3>Certified Technicians</h3>
+      <p>Our team holds industry certifications and participates in ongoing training to stay current with the latest repair technologies.</p>
+    </div>
+    <div class="why-card reveal reveal-delay-2">
+      <div class="why-num">02</div>
+      <div class="why-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3v-5l2-5h14l2 5v5h-2"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/></svg></div>
+      <h3>All Makes &amp; Models</h3>
+      <p>From domestic trucks to European imports — we have the tools, parts, and expertise for any vehicle on the road.</p>
+    </div>
+    <div class="why-card reveal reveal-delay-3">
+      <div class="why-num">03</div>
+      <div class="why-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <h3>Lifetime Warranty</h3>
+      <p>We stand behind our work. Every repair comes with a lifetime warranty — because quality should last.</p>
+    </div>
+    <div class="why-card highlighted reveal reveal-delay-4">
+      <div class="why-num">04</div>
+      <div class="why-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+      <h3>Fast Turnaround</h3>
+      <p>We respect your time. Our efficient workflow means your vehicle is back on the road as quickly as possible.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA ROW -->
+<div class="cta-row">
+  <div class="cta-block dark reveal">
+    <span class="section-label">Car Detailing</span>
+    <h2>Make It Look<br/>Brand New</h2>
+    <p>Three packages designed for every need — from a quick refresh to a complete showroom treatment.</p>
+    <div><a href="detailing.html" class="btn btn-red btn-md">See Detailing Packages</a></div>
+  </div>
+  <div class="cta-block red reveal reveal-delay-2">
+    <span class="section-label" style="color:rgba(255,255,255,0.5)">Online Booking</span>
+    <h2>Ready to<br/>Book Your Visit?</h2>
+    <p>Pick your service, choose a date and time — we'll confirm within 24 hours.</p>
+    <div style="position:relative;z-index:1;"><a href="appointments.html" class="btn btn-outline-white btn-md">Book an Appointment</a></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="../uploads/logo-1777475435311.webp" alt="Duramax Logo">
+      <p>Expert auto body repair serving Kensington, MD and the greater DC metro area since 1989.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Pages</h4>
+      <a href="about.html">About Us</a>
+      <a href="services.html">Services</a>
+      <a href="detailing.html">Detailing</a>
+      <a href="appointments.html">Appointments</a>
+      <a href="reviews.html">Reviews</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="services.html">Collision Repair</a>
+      <a href="services.html">Dent Removal</a>
+      <a href="services.html">Paint &amp; Scratches</a>
+      <a href="services.html">Frame Repair</a>
+      <a href="services.html">Hail Damage</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p class="highlight">(301) 897-8190</p>
+      <a href="mailto:duramaxbodyshop@gmail.com" style="color:#555;font-size:13px;text-decoration:none;display:block;margin-bottom:10px;">duramaxbodyshop@gmail.com</a>
+      <p>10515 Summit Ave</p>
+      <p>Kensington, MD 20895</p>
+      <p style="margin-top:8px;">Mon–Fri: 9am – 5pm</p>
+      <p>Sat: 9am – 1pm</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 <span>Duramax Body Shop</span>. All rights reserved.</p>
+    <p>10515 Summit Ave, Kensington, MD 20895</p>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(el => {
+    if (el.isIntersecting) {
+      el.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
