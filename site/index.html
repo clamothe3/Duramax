@@ -506,6 +506,7 @@ body::before {
 </style>
 </head>
 <body>
+<script src="transition.js"></script>
 
 <!-- NAV -->
 <nav class="site-nav">
@@ -530,6 +531,17 @@ body::before {
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
+  <div style="
+  position: absolute; inset: 0; z-index: 0;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+">
+ <img src="logo-1777475435311.webp" alt="" style="
+  width: min(600px, 80vw);
+  opacity: 0.12;
+  user-select: none;
+">
+</div>
   <div class="hero-eyebrow">Kensington, MD &nbsp;·&nbsp; Est. 1989 &nbsp;·&nbsp; Family Owned</div>
   <h1>Kensington's Most<br/>Trusted<br/><em>Body Shop</em></h1>
   <p class="hero-sub">35 years of family‑owned craftsmanship. From precision collision repair to showroom‑level detailing — your vehicle deserves the best.</p>
@@ -549,47 +561,47 @@ body::before {
     <div class="carousel-track">
       <!-- First set -->
       <div class="carousel-item">
-        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=560&q=80" alt="Luxury car">
+        <img src="images/bmw-m3.jpg" alt="BMW M3 detailing">
       </div>
       <div class="carousel-item">
-        <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=560&q=80" alt="Car detail">
+        <img src="images/after-interior.jpg" alt="Clean interior detail">
       </div>
       <div class="carousel-item">
-        <img src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=560&q=80" alt="Car paint">
+        <img src="images/bmw-interior.jpg" alt="BMW luxury interior">
       </div>
       <div class="carousel-item">
-        <img src="https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?w=560&q=80" alt="Auto body">
+        <img src="images/bmw-console.jpg" alt="BMW center console detail">
       </div>
       <div class="carousel-item">
-        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=560&q=80" alt="Car repair">
+        <img src="images/technician.jpg" alt="Duramax technician at work">
       </div>
       <div class="carousel-item">
-        <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=560&q=80" alt="Sports car">
+        <img src="images/mercedes-classic.jpg" alt="Classic Mercedes restoration">
       </div>
       <div class="carousel-item">
-        <img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=560&q=80" alt="Car interior">
+        <img src="images/paint-booth.jpg" alt="Paint booth refinishing">
       </div>
       <!-- Duplicate for seamless loop -->
       <div class="carousel-item">
-        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=560&q=80" alt="Luxury car">
+        <img src="images/bmw-m3.jpg" alt="BMW M3 detailing">
       </div>
       <div class="carousel-item">
-        <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=560&q=80" alt="Car detail">
+        <img src="images/after-interior.jpg" alt="Clean interior detail">
       </div>
       <div class="carousel-item">
-        <img src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=560&q=80" alt="Car paint">
+        <img src="images/bmw-interior.jpg" alt="BMW luxury interior">
       </div>
       <div class="carousel-item">
-        <img src="https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?w=560&q=80" alt="Auto body">
+        <img src="images/bmw-console.jpg" alt="BMW center console detail">
       </div>
       <div class="carousel-item">
-        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=560&q=80" alt="Car repair">
+        <img src="images/technician.jpg" alt="Duramax technician at work">
       </div>
       <div class="carousel-item">
-        <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=560&q=80" alt="Sports car">
+        <img src="images/mercedes-classic.jpg" alt="Classic Mercedes restoration">
       </div>
       <div class="carousel-item">
-        <img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=560&q=80" alt="Car interior">
+        <img src="images/paint-booth.jpg" alt="Paint booth refinishing">
       </div>
     </div>
   </div>
@@ -661,7 +673,7 @@ body::before {
 <!-- ABOUT STRIP -->
 <div class="about-strip">
   <div class="about-strip-img reveal">
-    <div class="img-placeholder">shop / team photo</div>
+    <img src="duramaxbuild.png" alt="Duramax Body Shop" style="width:100%;height:100%;object-fit:cover;display:block;">
   </div>
   <div class="about-strip-content reveal reveal-delay-2">
     <span class="section-label" style="color:var(--red)">About Duramax</span>

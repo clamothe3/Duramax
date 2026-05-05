@@ -5,204 +5,115 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact Us — Duramax Body Shop</title>
 <link rel="stylesheet" href="shared.css">
-<link rel="stylesheet" href="animations.css">
 <style>
-.contact-layout {
-  display: grid; grid-template-columns: 1fr 420px; gap: 0;
-}
-.contact-form-area { padding: 64px 72px; }
-.contact-info-area {
-  background: var(--black); padding: 64px 48px;
-}
+.contact-layout { display: grid; grid-template-columns: 1fr 400px; gap: 0; min-height: 600px; }
+.contact-form-area { padding: 64px 72px; background: var(--dark); border-right: 1px solid var(--border); }
+.contact-info-area { background: var(--black); padding: 64px 48px; }
 
-.form-title {
-  font-family: 'Barlow Condensed',sans-serif;
-  font-size: 32px; font-weight: 900; margin-bottom: 6px;
-}
-.form-sub { font-size: 14px; color: var(--mid); margin-bottom: 36px; line-height: 1.6; }
+.form-title { font-family: var(--font-display); font-size: 40px; color: #fff; margin-bottom: 6px; letter-spacing: 1px; }
+.form-sub { font-size: 14px; color: #aaa; margin-bottom: 36px; line-height: 1.6; }
 
-.contact-form { display: flex; flex-direction: column; gap: 16px; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.contact-form { display: flex; flex-direction: column; gap: 14px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .form-field { display: flex; flex-direction: column; gap: 6px; }
-.form-field.full { grid-column: 1/-1; }
-.form-field label {
-  font-family: 'Barlow Condensed',sans-serif;
-  font-size: 13px; font-weight: 700; letter-spacing: 0.5px; color: #555;
-}
+.form-field label { font-family: var(--font-head); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: #999; text-transform: uppercase; }
 .form-field input, .form-field select, .form-field textarea {
-  border: 1.5px solid #ddd; border-radius: 3px;
-  padding: 11px 14px; font-family: 'Barlow',sans-serif; font-size: 14px;
-  color: var(--text); background: #fff; outline: none;
-  transition: border-color 0.15s;
+  border: 1px solid var(--border); border-radius: 10px;
+  padding: 11px 14px; font-family: var(--font-body); font-size: 13px;
+  color: #fff; background: rgba(255,255,255,0.04); outline: none;
+  transition: border-color 0.15s; width: 100%;
 }
-.form-field input:focus, .form-field select:focus, .form-field textarea:focus {
-  border-color: var(--red);
-}
+.form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: rgba(204,0,0,0.4); }
 .form-field textarea { resize: vertical; min-height: 120px; }
-.form-submit { display: flex; align-items: center; gap: 16px; margin-top: 8px; }
-.form-note { font-size: 12px; color: #aaa; }
+select option { background: #1a1a1a; color: #fff; }
+.form-submit { display: flex; align-items: center; gap: 16px; margin-top: 8px; flex-wrap: wrap; }
+.form-note { font-size: 12px; color: #888; }
+.form-note a { color: var(--red); }
 
-/* Info area */
-.info-section { margin-bottom: 40px; }
-.info-label {
-  font-family: 'Barlow Condensed',sans-serif;
-  font-size: 11px; font-weight: 700; letter-spacing: 2.5px;
-  color: var(--red); text-transform: uppercase; margin-bottom: 14px;
-}
-.info-item {
-  display: flex; align-items: flex-start; gap: 14px;
-  margin-bottom: 16px;
-}
-.info-icon {
-  width: 36px; height: 36px; border-radius: 50%;
-  border: 1.5px solid #2a2a2a;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 15px; flex-shrink: 0; margin-top: 2px;
-}
-.info-item-label { font-size: 11px; color: #555; margin-bottom: 3px; letter-spacing: 0.5px; }
-.info-item-val {
-  font-family: 'Barlow Condensed',sans-serif;
-  font-size: 18px; font-weight: 700; color: #fff; line-height: 1.2;
-}
+.info-section { margin-bottom: 36px; }
+.info-label { font-family: var(--font-head); font-size: 10px; font-weight: 700; letter-spacing: 3px; color: var(--red); text-transform: uppercase; margin-bottom: 14px; }
+.info-item { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px; }
+.info-icon { width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--border); background: rgba(255,255,255,0.03); display: flex; align-items: center; justify-content: center; color: var(--red); flex-shrink: 0; margin-top: 2px; }
+.info-item-label { font-size: 11px; color: #999; margin-bottom: 4px; letter-spacing: 0.5px; }
+.info-item-val { font-family: var(--font-head); font-size: 18px; font-weight: 700; color: #fff; line-height: 1.2; }
 .info-item-val a { color: #fff; text-decoration: none; }
 .info-item-val a:hover { color: var(--red); }
 
-.hours-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px;
-}
-.hours-row {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 7px 0; border-bottom: 1px solid #1e1e1e;
-}
+.hours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; }
+.hours-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--border); }
 .hours-row:last-child { border-bottom: none; }
-.hours-day { font-size: 13px; color: #666; }
-.hours-time { font-family: 'Barlow Condensed',sans-serif; font-size: 14px; font-weight: 700; color: #bbb; }
-.hours-time.closed { color: #444; }
+.hours-day { font-size: 13px; color: #aaa; }
+.hours-time { font-family: var(--font-head); font-size: 14px; font-weight: 700; color: #ccc; }
+.hours-time.closed { color: #333; }
 
-.map-placeholder {
-  border-radius: 4px; overflow: hidden; height: 200px; margin-top: 28px;
-}
-
-/* Success */
-#form-success {
-  display: none;
-  background: #f0fff0; border: 1.5px solid #4caf50; border-radius: 4px;
-  padding: 24px 28px; margin-top: 16px;
-}
-#form-success h3 { font-family: 'Barlow Condensed',sans-serif; font-size: 22px; font-weight: 800; color: #2e7d32; margin-bottom: 6px; }
-#form-success p { font-size: 14px; color: #388e3c; }
+#form-success { display:none; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 24px; margin-top: 16px; }
+#form-success h3 { font-family: var(--font-display); font-size: 24px; color: #fff; margin-bottom: 8px; }
+#form-success p { font-size: 13px; color: #555; }
 </style>
 </head>
 <body>
-
+<script src="transition.js"></script>
 <nav class="site-nav">
   <a href="index.html" class="nav-logo">
-    <img src="../uploads/logo-1777475435311.webp" alt="Duramax Logo">
+    <img src="logo-1777475435311.webp" alt="Duramax Logo">
     <div class="nav-logo-text"><strong>DURAMAX</strong><span>Body Shop</span></div>
   </a>
   <div class="nav-links">
-    <a href="about.html">About</a>
-    <a href="services.html">Services</a>
-    <a href="detailing.html">Detailing</a>
-    <a href="reviews.html">Reviews</a>
+    <a href="about.html">About</a><a href="services.html">Services</a><a href="detailing.html">Detailing</a><a href="reviews.html">Reviews</a>
     <a href="contact.html" class="active">Contact</a>
     <a href="tel:3018978190" class="nav-phone">(301) 897-8190</a>
     <a href="appointments.html" class="nav-cta btn">Book Now</a>
   </div>
 </nav>
 
-<div class="page-hero" style="padding:40px 80px;">
+<div class="page-hero">
   <div class="page-hero-label">Contact Us</div>
   <h1>Get In Touch</h1>
   <p>Questions about a repair? Need an estimate? We're here to help.</p>
 </div>
 
 <div class="contact-layout">
-
-  <!-- Form -->
   <div class="contact-form-area">
     <div class="form-title">Send Us a Message</div>
-    <div class="form-sub">Fill out the form below and we'll get back to you as soon as possible — usually within one business day.</div>
-
+    <div class="form-sub">Fill out the form below and we'll get back to you within one business day.</div>
     <form class="contact-form" onsubmit="handleSubmit(event)">
       <div class="form-row">
-        <div class="form-field">
-          <label>First Name</label>
-          <input type="text" placeholder="John" required>
-        </div>
-        <div class="form-field">
-          <label>Last Name</label>
-          <input type="text" placeholder="Smith" required>
-        </div>
+        <div class="form-field"><label>First Name</label><input type="text" placeholder="John" required></div>
+        <div class="form-field"><label>Last Name</label><input type="text" placeholder="Smith" required></div>
       </div>
       <div class="form-row">
-        <div class="form-field">
-          <label>Phone Number</label>
-          <input type="tel" placeholder="(301) 555-0100" required>
-        </div>
-        <div class="form-field">
-          <label>Email Address</label>
-          <input type="email" placeholder="john@email.com" required>
-        </div>
+        <div class="form-field"><label>Phone Number</label><input type="tel" placeholder="(301) 555-0100" required></div>
+        <div class="form-field"><label>Email Address</label><input type="email" placeholder="john@email.com" required></div>
       </div>
       <div class="form-field">
         <label>Subject</label>
-        <select>
-          <option value="">Select a subject…</option>
-          <option>Request a Free Estimate</option>
-          <option>Collision Repair Question</option>
-          <option>Paint &amp; Body Work</option>
-          <option>Car Detailing</option>
-          <option>Mechanical Service</option>
-          <option>Appointment Inquiry</option>
-          <option>Other</option>
-        </select>
+        <select><option value="">Select a subject…</option><option>Request a Free Estimate</option><option>Collision Repair Question</option><option>Paint &amp; Body Work</option><option>Car Detailing</option><option>Mechanical Service</option><option>Appointment Inquiry</option><option>Other</option></select>
       </div>
-      <div class="form-field">
-        <label>Vehicle (optional)</label>
-        <input type="text" placeholder="e.g. 2020 Toyota Camry">
-      </div>
-      <div class="form-field">
-        <label>Message</label>
-        <textarea placeholder="Tell us about your vehicle or what you need help with…" required></textarea>
-      </div>
+      <div class="form-field"><label>Vehicle (optional)</label><input type="text" placeholder="e.g. 2020 Toyota Camry"></div>
+      <div class="form-field"><label>Message</label><textarea placeholder="Tell us about your vehicle or what you need help with…" required></textarea></div>
       <div class="form-submit">
         <button type="submit" class="btn btn-red btn-md">Send Message</button>
-        <span class="form-note">Or call us directly at <a href="tel:3018978190" style="color:var(--red);">(301) 897-8190</a></span>
+        <span class="form-note">Or call us at <a href="tel:3018978190">(301) 897-8190</a></span>
       </div>
     </form>
-
-    <div id="form-success">
-      <h3>✓ Message Received!</h3>
-      <p>Thank you for reaching out. A member of our team will contact you within one business day. For urgent matters, call us at (301) 897-8190.</p>
-    </div>
+    <div id="form-success"><h3>✓ Message Received!</h3><p>A member of our team will contact you within one business day. For urgent matters, call us at (301) 897-8190.</p></div>
   </div>
 
-  <!-- Info -->
   <div class="contact-info-area">
-
     <div class="info-section">
       <div class="info-label">Phone</div>
       <div class="info-item">
-        <div class="info-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12 19.79 19.79 0 0 1 1.93 3.36 2 2 0 0 1 3.9 1.17h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.03z"/></svg></div>
-        <div>
-          <div class="info-item-label">Main Line</div>
-          <div class="info-item-val"><a href="tel:3018978190">(301) 897-8190</a></div>
-        </div>
+        <div class="info-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12 19.79 19.79 0 0 1 1.93 3.36 2 2 0 0 1 3.9 1.17h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.03z"/></svg></div>
+        <div><div class="info-item-label">Main Line</div><div class="info-item-val"><a href="tel:3018978190">(301) 897-8190</a></div></div>
       </div>
     </div>
-
     <div class="info-section">
       <div class="info-label">Address</div>
       <div class="info-item">
-        <div class="info-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-        <div>
-          <div class="info-item-label">Location</div>
-          <div class="info-item-val">10515 Summit Ave<br/>Kensington, MD 20895</div>
-        </div>
+        <div class="info-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div><div class="info-item-label">Location</div><div class="info-item-val">10515 Summit Ave<br/>Kensington, MD 20895</div></div>
       </div>
     </div>
-
     <div class="info-section">
       <div class="info-label">Hours of Operation</div>
       <div class="hours-grid">
@@ -215,62 +126,22 @@
         <div class="hours-row"><span class="hours-day">Sunday</span><span class="hours-time closed">Closed</span></div>
       </div>
     </div>
-
-    <div class="map-placeholder img-placeholder dark">map — 10515 Summit Ave, Kensington MD</div>
-
-    <div style="margin-top:28px;padding-top:24px;border-top:1px solid #1e1e1e;">
-      <a href="appointments.html" class="btn btn-red btn-md" style="width:100%;text-align:center;display:block;">Book an Appointment Online →</a>
-    </div>
-
+    <div class="img-placeholder dark" style="height:160px;border-radius:12px;margin-top:28px;border:1px solid var(--border);">map — 10515 Summit Ave, Kensington MD</div>
+    <div style="margin-top:24px;"><a href="appointments.html" class="btn btn-red btn-md" style="width:100%;text-align:center;display:block;">Book an Appointment →</a></div>
   </div>
 </div>
 
 <footer class="site-footer">
   <div class="footer-grid">
-    <div class="footer-brand">
-      <img src="../uploads/logo-1777475435311.webp" alt="Duramax Logo">
-      <p>Expert auto body repair serving Kensington, MD and the greater DC metro area since 1989.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Pages</h4>
-      <a href="about.html">About Us</a>
-      <a href="services.html">Services</a>
-      <a href="detailing.html">Detailing</a>
-      <a href="appointments.html">Appointments</a>
-      <a href="reviews.html">Reviews</a>
-    <a href="contact.html">Contact</a>
-    </div>
-    <div class="footer-col">
-      <h4>Services</h4>
-      <a href="services.html">Collision Repair</a>
-      <a href="services.html">Dent Removal</a>
-      <a href="services.html">Paint &amp; Scratches</a>
-      <a href="services.html">Frame Repair</a>
-      <a href="services.html">Hail Damage</a>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <p class="highlight">(301) 897-8190</p>
-      <a href="mailto:duramaxbodyshop@gmail.com" style="color:#666;font-size:13px;text-decoration:none;display:block;margin-bottom:10px;">duramaxbodyshop@gmail.com</a>
-      <p>10515 Summit Ave</p>
-      <p>Kensington, MD 20895</p>
-      <p style="margin-top:8px;">Mon–Fri: 9am – 5pm</p>
-      <p>Sat: 9am – 1pm</p>
-    </div>
+    <div class="footer-brand"><img src="logo-1777475435311.webp" alt="Duramax Logo"><p>Expert auto body repair serving Kensington, MD and the greater DC metro area since 1989.</p></div>
+    <div class="footer-col"><h4>Pages</h4><a href="about.html">About Us</a><a href="services.html">Services</a><a href="detailing.html">Detailing</a><a href="appointments.html">Appointments</a><a href="reviews.html">Reviews</a><a href="contact.html">Contact</a></div>
+    <div class="footer-col"><h4>Services</h4><a href="services.html">Collision Repair</a><a href="services.html">Dent Removal</a><a href="services.html">Paint &amp; Scratches</a><a href="services.html">Frame Repair</a><a href="services.html">Hail Damage</a></div>
+    <div class="footer-col"><h4>Contact</h4><p class="highlight">(301) 897-8190</p><a href="mailto:duramaxbodyshop@gmail.com" style="color:#888;">duramaxbodyshop@gmail.com</a><p>10515 Summit Ave</p><p>Kensington, MD 20895</p><p style="margin-top:8px;">Mon–Fri: 9am – 5pm</p><p>Sat: 9am – 1pm</p></div>
   </div>
-  <div class="footer-bottom">
-    <p>© 2026 <span>Duramax Body Shop</span>. All rights reserved.</p>
-    <p>10515 Summit Ave, Kensington, MD 20895</p>
-  </div>
+  <div class="footer-bottom"><p>© 2026 <span>Duramax Body Shop</span>. All rights reserved.</p><p>10515 Summit Ave, Kensington, MD 20895</p></div>
 </footer>
-
 <script>
-function handleSubmit(e) {
-  e.preventDefault();
-  e.target.style.display = 'none';
-  document.getElementById('form-success').style.display = 'block';
-}
+function handleSubmit(e) { e.preventDefault(); e.target.style.display='none'; document.getElementById('form-success').style.display='block'; }
 </script>
-<script src="animations.js"></script>
 </body>
 </html>

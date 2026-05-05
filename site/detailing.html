@@ -5,118 +5,238 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Car Detailing — Duramax Body Shop</title>
 <link rel="stylesheet" href="shared.css">
-<link rel="stylesheet" href="animations.css">
 <style>
-.disclaimer {
-  background: #fffbf0; border-left: 3px solid #C8A54A;
-  padding: 14px 20px; border-radius: 0 4px 4px 0;
-  margin-bottom: 40px;
-  font-size: 13px; color: #666; line-height: 1.7;
-}
-.disclaimer strong { color: #555; }
+.disclaimer { background: rgba(200,165,74,0.08); border-left: 3px solid #C8A54A; padding: 14px 20px; border-radius: 0 12px 12px 0; margin-bottom: 40px; font-size: 13px; color: #666; line-height: 1.7; }
+.disclaimer strong { color: #888; }
+.disclaimer a { color: var(--red); }
 
-.packages-grid {
-  display: grid; grid-template-columns: repeat(3,1fr); gap: 28px;
-  align-items: start;
-}
-.pkg-card {
-  border-radius: 4px; overflow: hidden;
-  border: 2px solid #e8e6e1; background: #fff;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.pkg-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
-.pkg-card.featured { border-color: var(--red); }
-.pkg-featured-badge {
-  background: var(--red); color: #fff;
-  font-family: 'Barlow Condensed',sans-serif;
-  font-size: 11px; font-weight: 700; letter-spacing: 1px;
-  padding: 5px 0; text-align: center; text-transform: uppercase; letter-spacing: 2px;
-}
-.pkg-header { padding: 24px 24px 16px; border-bottom: 1.5px solid #f0eeea; }
+.packages-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; align-items: start; }
+
+.pkg-card { border-radius: 20px; overflow: hidden; border: 1px solid var(--border); background: rgba(255,255,255,0.03); transition: transform 0.32s cubic-bezier(0.25,0.46,0.45,0.94), border-color 0.32s, box-shadow 0.32s; }
+.pkg-card:hover { transform: translateY(-6px); border-color: rgba(255,255,255,0.14); box-shadow: 0 20px 60px rgba(0,0,0,0.45), 0 0 40px rgba(204,0,0,0.06); }
+.pkg-card.featured { border-color: rgba(204,0,0,0.3); background: rgba(204,0,0,0.04); }
+.pkg-card.featured:hover { box-shadow: 0 20px 60px rgba(0,0,0,0.45), 0 0 50px rgba(204,0,0,0.12); }
+.pkg-featured-badge { background: var(--red); color: #fff; font-family: var(--font-head); font-size: 11px; font-weight: 700; letter-spacing: 2px; padding: 6px 0; text-align: center; text-transform: uppercase; }
+.pkg-header { padding: 24px 24px 16px; border-bottom: 1px solid var(--border); }
 .pkg-header.featured-bg { background: var(--red); border-bottom-color: var(--red-dark); }
-.pkg-name { font-family: 'Barlow Condensed',sans-serif; font-size: 28px; font-weight: 900; line-height: 1; margin-bottom: 2px; }
-.pkg-name.white { color: #fff; }
-.pkg-duration { font-size: 12px; color: var(--mid); }
-.pkg-duration.white { color: rgba(255,255,255,0.7); }
+.pkg-name { font-family: var(--font-display); font-size: 32px; letter-spacing: 1px; line-height: 1; margin-bottom: 4px; color: #fff; }
+.pkg-duration { font-size: 12px; color: #555; }
+.pkg-duration.white { color: rgba(255,255,255,0.65); }
 
-.pkg-prices {
-  padding: 16px 24px; background: var(--off-white);
-  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
-}
+.pkg-prices { padding: 16px 24px; background: rgba(255,255,255,0.02); display: grid; grid-template-columns: 1fr 1fr; gap: 8px; border-bottom: 1px solid var(--border); }
 .pkg-price-item { text-align: center; }
-.pkg-price-type { font-size: 11px; color: var(--mid); margin-bottom: 2px; letter-spacing: 0.5px; }
-.pkg-price-val { font-family: 'Barlow Condensed',sans-serif; font-size: 24px; font-weight: 900; color: var(--text); line-height: 1; }
-.pkg-price-val .from { font-size: 12px; font-weight: 400; color: var(--mid); font-family: 'Barlow',sans-serif; }
+.pkg-price-type { font-size: 11px; color: #555; margin-bottom: 4px; }
+.pkg-price-val { font-family: var(--font-display); font-size: 28px; color: #fff; line-height: 1; }
+.pkg-price-val .from { font-size: 12px; color: #555; font-family: var(--font-body); }
 
 .pkg-body { padding: 20px 24px 24px; }
-.pkg-includes { font-family: 'Barlow Condensed',sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--mid); text-transform: uppercase; margin-bottom: 12px; }
-.pkg-feature { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 1px solid #f5f4f0; font-size: 13px; color: var(--text); }
+.pkg-includes { font-family: var(--font-head); font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #444; text-transform: uppercase; margin-bottom: 12px; }
+.pkg-feature { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 13px; color: #888; }
 .pkg-feature:last-of-type { border-bottom: none; margin-bottom: 12px; }
 .pkg-check { color: var(--red); font-weight: 700; font-size: 13px; margin-top: 1px; flex-shrink: 0; }
 
-.addons { margin-top: 16px; padding-top: 16px; border-top: 1.5px dashed #e0ddd7; }
-.addons-title { font-family: 'Barlow Condensed',sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; color: #aaa; text-transform: uppercase; margin-bottom: 10px; }
-.addon-item { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid #f5f4f0; }
+.addons { margin-top: 16px; padding-top: 16px; border-top: 1px dashed rgba(255,255,255,0.08); }
+.addons-title { font-family: var(--font-head); font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #333; text-transform: uppercase; margin-bottom: 10px; }
+.addon-item { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
 .addon-item:last-child { border-bottom: none; }
 .addon-name { font-size: 13px; color: #555; }
-.addon-price { font-family: 'Barlow Condensed',sans-serif; font-size: 14px; font-weight: 700; color: var(--text); white-space: nowrap; margin-left: 8px; }
-
+.addon-price { font-family: var(--font-head); font-size: 14px; font-weight: 700; color: #888; white-space: nowrap; margin-left: 8px; }
 .pkg-book { margin-top: 20px; }
 
-/* Combo banner */
-.combo-banner {
-  background: var(--black); border-radius: 4px;
-  padding: 36px 48px; margin-top: 48px;
-  display: flex; justify-content: space-between; align-items: center; gap: 32px;
-  flex-wrap: wrap;
+/* ── BEFORE / AFTER SLIDER ── */
+.ba-section { padding: 80px 80px 40px; }
+.ba-slider {
+  position: relative;
+  height: clamp(300px, 42vw, 500px);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  cursor: col-resize;
+  user-select: none;
+  -webkit-user-select: none;
+  margin-top: 40px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5);
 }
-.combo-banner-text {}
-.combo-label { font-family: 'Barlow Condensed',sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 3px; color: var(--red); text-transform: uppercase; margin-bottom: 8px; }
-.combo-title { font-family: 'Barlow Condensed',sans-serif; font-size: 40px; font-weight: 900; color: #fff; line-height: 1; margin-bottom: 8px; }
-.combo-sub { font-size: 14px; color: #666; }
+.ba-side {
+  position: absolute;
+  inset: 0;
+}
+.ba-after {
+  background: #111 url('images/after-interior.jpg') center/cover no-repeat;
+}
+.ba-before {
+  clip-path: inset(0 50% 0 0);
+  background: #111 url('images/before-interior.jpg') center/cover no-repeat;
+}
+.ba-before::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.15);
+  pointer-events: none;
+}
+.ba-badge {
+  position: absolute;
+  top: 22px;
+  z-index: 15;
+  font-family: var(--font-head);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase;
+  padding: 8px 18px;
+  border-radius: 100px;
+  pointer-events: none;
+}
+.ba-badge-before {
+  left: 22px;
+  background: rgba(20,20,20,0.8);
+  color: rgba(255,255,255,0.45);
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(8px);
+}
+.ba-badge-after {
+  right: 22px;
+  background: var(--red);
+  color: #fff;
+  box-shadow: 0 0 22px rgba(204,0,0,0.45);
+}
+.ba-center-text {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 3;
+  text-align: center;
+}
+.ba-center-text span {
+  font-family: var(--font-display);
+  font-size: clamp(14px, 2vw, 22px);
+  letter-spacing: 6px;
+  color: rgba(255,255,255,0.04);
+  white-space: nowrap;
+}
+.ba-divider {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.9) 15%, #fff 50%, rgba(255,255,255,0.9) 85%, transparent);
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 12;
+  box-shadow: 0 0 18px rgba(255,255,255,0.25);
+}
+.ba-handle {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 54px; height: 54px;
+  background: #fff;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 28px rgba(0,0,0,0.55), 0 0 0 3px rgba(204,0,0,0.18);
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+.ba-slider.dragging .ba-handle {
+  transform: translate(-50%, -50%) scale(1.12);
+  box-shadow: 0 6px 36px rgba(0,0,0,0.65), 0 0 0 4px rgba(204,0,0,0.4);
+}
+.ba-range {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  opacity: 0;
+  cursor: col-resize;
+  margin: 0; padding: 0;
+  z-index: 20;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.ba-hint {
+  position: absolute;
+  bottom: 18px; left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-head);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 4px; color: rgba(255,255,255,0.28);
+  pointer-events: none; z-index: 5;
+  white-space: nowrap;
+  animation: ba-hint-fade 4s ease forwards;
+}
+@keyframes ba-hint-fade {
+  0%   { opacity: 0; }
+  20%  { opacity: 1; }
+  75%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.combo-banner {
+  background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+  border-radius: 20px; padding: 36px 48px; margin-top: 48px;
+  display: flex; justify-content: space-between; align-items: center; gap: 32px; flex-wrap: wrap;
+}
+.combo-label { font-family: var(--font-head); font-size: 11px; font-weight: 700; letter-spacing: 3px; color: var(--red); text-transform: uppercase; margin-bottom: 8px; }
+.combo-title { font-family: var(--font-display); font-size: 40px; color: #fff; line-height: 1; margin-bottom: 8px; letter-spacing: 1px; }
+.combo-sub { font-size: 14px; color: #555; }
 .combo-prices { display: flex; gap: 32px; }
 .combo-price-item { text-align: center; }
 .combo-price-type { font-size: 12px; color: #555; margin-bottom: 4px; }
-.combo-price-val { font-family: 'Barlow Condensed',sans-serif; font-size: 36px; font-weight: 900; color: #fff; line-height: 1; }
-.combo-price-val span { font-size: 16px; color: #888; }
+.combo-price-val { font-family: var(--font-display); font-size: 40px; color: #fff; line-height: 1; }
+.combo-price-val span { font-size: 16px; color: #555; }
 
-/* Quote section */
-.quote-section {
-  background: var(--off-white); padding: 56px 80px;
-  text-align: center;
+/* ── PHOTO GALLERY ── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 240px;
+  gap: 12px;
 }
-.quote-form {
-  max-width: 540px; margin: 32px auto 0;
-  display: flex; flex-direction: column; gap: 14px;
+.gallery-item {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--dark2);
 }
-.qf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.qf-field { display: flex; flex-direction: column; gap: 6px; }
-.qf-field label { font-family: 'Barlow Condensed',sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; color: #555; }
-.qf-field input, .qf-field select, .qf-field textarea {
-  border: 1.5px solid #ddd; border-radius: 3px;
-  padding: 10px 14px; font-family: 'Barlow',sans-serif; font-size: 14px;
-  color: var(--text); background: #fff; outline: none;
-  transition: border-color 0.15s;
+.gallery-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94);
 }
-.qf-field input:focus, .qf-field select:focus, .qf-field textarea:focus { border-color: var(--red); }
-#quote-success { display: none; background: #f0fff0; border: 1.5px solid #4caf50; border-radius: 4px; padding: 20px; margin-top: 16px; }
-#quote-success h3 { font-family: 'Barlow Condensed',sans-serif; font-size: 20px; font-weight: 800; color: #2e7d32; margin-bottom: 4px; }
-#quote-success p { font-size: 14px; color: #388e3c; }
+.gallery-item:hover img { transform: scale(1.06); }
+.gallery-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 55%);
+  display: flex; align-items: flex-end; padding: 18px 20px;
+  opacity: 0; transition: opacity 0.3s;
+}
+.gallery-item:hover .gallery-overlay { opacity: 1; }
+.gallery-overlay span {
+  font-family: var(--font-head);
+  font-size: 13px; font-weight: 700;
+  color: #fff; letter-spacing: 1px;
+}
+
+/* dark form inputs (excludes the BA slider range) */
+input:not(.ba-range), select, textarea {
+  border: 1px solid var(--border) !important; border-radius: 8px !important;
+  padding: 10px 14px !important; font-family: var(--font-body) !important; font-size: 13px !important;
+  color: #fff !important; background: rgba(255,255,255,0.04) !important; outline: none !important;
+  transition: border-color 0.15s !important; width: 100% !important;
+}
+input:focus, select:focus, textarea:focus { border-color: rgba(204,0,0,0.4) !important; }
+select option { background: #1a1a1a; color: #fff; }
 </style>
 </head>
 <body>
-
+<script src="transition.js"></script>
 <nav class="site-nav">
   <a href="index.html" class="nav-logo">
-    <img src="../uploads/logo-1777475435311.webp" alt="Duramax Logo">
+    <img src="logo-1777475435311.webp" alt="Duramax Logo">
     <div class="nav-logo-text"><strong>DURAMAX</strong><span>Body Shop</span></div>
   </a>
   <div class="nav-links">
-    <a href="about.html">About</a>
-    <a href="services.html">Services</a>
+    <a href="about.html">About</a><a href="services.html">Services</a>
     <a href="detailing.html" class="active">Detailing</a>
-    <a href="reviews.html">Reviews</a>
-    <a href="contact.html">Contact</a>
+    <a href="reviews.html">Reviews</a><a href="contact.html">Contact</a>
     <a href="tel:3018978190" class="nav-phone">(301) 897-8190</a>
     <a href="appointments.html" class="nav-cta btn">Book Now</a>
   </div>
@@ -128,28 +248,50 @@
   <p>Professional exterior and interior detailing. We restore the finish and deep-clean the cabin — so it feels like the day you drove it off the lot.</p>
 </div>
 
+<section class="ba-section reveal">
+  <span class="section-label">The Duramax Difference</span>
+  <h2 class="section-title">See It for Yourself</h2>
+  <p class="section-sub">Drag the slider left and right to compare the before and after — this is the standard we hold every vehicle to.</p>
+
+  <div class="ba-slider" id="baSlider">
+    <div class="ba-side ba-after"></div>
+    <div class="ba-side ba-before" id="baBefore"></div>
+
+    <div class="ba-badge ba-badge-before">Before</div>
+    <div class="ba-badge ba-badge-after">After</div>
+
+    <div class="ba-center-text">
+      <span>DURAMAX DETAIL</span>
+    </div>
+
+    <div class="ba-divider" id="baDivider">
+      <div class="ba-handle">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 4.5L3 11L8 17.5" stroke="#CC0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M14 4.5L19 11L14 17.5" stroke="#CC0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <input type="range" class="ba-range" id="baRange" min="0" max="100" value="50" step="0.2">
+    <div class="ba-hint">← DRAG TO COMPARE →</div>
+  </div>
+</section>
+
 <section class="section">
   <div class="disclaimer">
-    <strong>* Price Disclaimer:</strong> The prices below represent typical rates for most vehicles. Your exact price depends on your vehicle's condition and any additional services requested. <a href="tel:3018978190" style="color:var(--red);">Call (301) 897-8190</a> or fill out the quote form below for a specific estimate.
+    <strong>* Price Disclaimer:</strong> Prices represent typical rates for most vehicles. Your exact price depends on your vehicle's condition and any additional services requested. <a href="tel:3018978190">Call (301) 897-8190</a> for a specific estimate.
   </div>
 
   <div class="packages-grid">
-
-    <!-- Exterior -->
-    <div class="pkg-card">
+    <div class="pkg-card reveal">
       <div class="pkg-header">
         <div class="pkg-name">Exterior</div>
         <div class="pkg-duration">Approx. 1–2 hours</div>
       </div>
       <div class="pkg-prices">
-        <div class="pkg-price-item">
-          <div class="pkg-price-type">Coupe / Sedan</div>
-          <div class="pkg-price-val">$150</div>
-        </div>
-        <div class="pkg-price-item">
-          <div class="pkg-price-type">Truck / SUV / Van</div>
-          <div class="pkg-price-val">$200</div>
-        </div>
+        <div class="pkg-price-item"><div class="pkg-price-type">Coupe / Sedan</div><div class="pkg-price-val">$150</div></div>
+        <div class="pkg-price-item"><div class="pkg-price-type">Truck / SUV / Van</div><div class="pkg-price-val">$200</div></div>
       </div>
       <div class="pkg-body">
         <div class="pkg-includes">Package Includes</div>
@@ -166,28 +308,19 @@
           <div class="addon-item"><span class="addon-name">Clay bar treatment</span><span class="addon-price">$50</span></div>
           <div class="addon-item"><span class="addon-name">Ceramic coating</span><span class="addon-price">Contact us</span></div>
         </div>
-        <div class="pkg-book">
-          <a href="tel:3018978190" class="btn btn-outline-red btn-sm" style="width:100%;text-align:center;display:block;">Call to Book — (301) 897-8190</a>
-        </div>
+        <div class="pkg-book"><a href="tel:3018978190" class="btn btn-outline-red btn-sm" style="width:100%;text-align:center;display:block;">Call to Book — (301) 897-8190</a></div>
       </div>
     </div>
 
-    <!-- Interior -->
-    <div class="pkg-card featured">
+    <div class="pkg-card featured reveal reveal-delay-1">
       <div class="pkg-featured-badge">Most Requested</div>
       <div class="pkg-header featured-bg">
-        <div class="pkg-name white">Interior</div>
+        <div class="pkg-name">Interior</div>
         <div class="pkg-duration white">Approx. 3–4 hours</div>
       </div>
       <div class="pkg-prices">
-        <div class="pkg-price-item">
-          <div class="pkg-price-type">1–2 Row Vehicles</div>
-          <div class="pkg-price-val">$150 <span class="from">+</span></div>
-        </div>
-        <div class="pkg-price-item">
-          <div class="pkg-price-type">3-Row SUV / Van</div>
-          <div class="pkg-price-val">$200 <span class="from">+</span></div>
-        </div>
+        <div class="pkg-price-item"><div class="pkg-price-type">1–2 Row Vehicles</div><div class="pkg-price-val">$150 <span class="from">+</span></div></div>
+        <div class="pkg-price-item"><div class="pkg-price-type">3-Row SUV / Van</div><div class="pkg-price-val">$200 <span class="from">+</span></div></div>
       </div>
       <div class="pkg-body">
         <div class="pkg-includes">Package Includes</div>
@@ -206,110 +339,127 @@
           <div class="addon-item"><span class="addon-name">Pet hair removal</span><span class="addon-price">$0–$100</span></div>
           <div class="addon-item"><span class="addon-name">Headliner shampoo &amp; stain extraction</span><span class="addon-price">$150</span></div>
         </div>
-        <div class="pkg-book">
-          <a href="tel:3018978190" class="btn btn-red btn-sm" style="width:100%;text-align:center;display:block;">Call to Book — (301) 897-8190</a>
-        </div>
+        <div class="pkg-book"><a href="tel:3018978190" class="btn btn-red btn-sm" style="width:100%;text-align:center;display:block;">Call to Book — (301) 897-8190</a></div>
       </div>
     </div>
 
-    <!-- Quote form card -->
-    <div class="pkg-card" style="border-style:dashed;">
+    <div class="pkg-card reveal reveal-delay-2" style="border-style:dashed;">
       <div class="pkg-header">
         <div class="pkg-name">Custom Quote</div>
         <div class="pkg-duration">We'll reach out within 24 hrs</div>
       </div>
       <div class="pkg-body">
-        <p style="font-size:13px;color:var(--mid);margin-bottom:20px;line-height:1.7;">Not sure which package fits? Send us your info and we'll put together a tailored estimate.</p>
+        <p style="font-size:13px;color:#555;margin-bottom:20px;line-height:1.7;">Not sure which package fits? Send us your info and we'll put together a tailored estimate.</p>
         <form onsubmit="handleQuote(event)" style="display:flex;flex-direction:column;gap:10px;">
-          <input type="text" placeholder="Your Name" required style="border:1.5px solid #ddd;border-radius:3px;padding:9px 12px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;">
-          <input type="email" placeholder="Email Address" required style="border:1.5px solid #ddd;border-radius:3px;padding:9px 12px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;">
-          <input type="tel" placeholder="Phone Number" style="border:1.5px solid #ddd;border-radius:3px;padding:9px 12px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;">
-          <input type="text" placeholder="Vehicle Year, Make &amp; Model" required style="border:1.5px solid #ddd;border-radius:3px;padding:9px 12px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;">
-          <select required style="border:1.5px solid #ddd;border-radius:3px;padding:9px 12px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;">
-            <option value="">Service Type…</option>
-            <option>Exterior Detailing</option>
-            <option>Interior Detailing</option>
-            <option>Exterior + Interior Combo</option>
-            <option>Not sure — help me choose</option>
-          </select>
-          <button type="submit" class="btn btn-red btn-sm" style="width:100%;">Get Free Quote</button>
+          <input type="text" placeholder="Your Name" required>
+          <input type="email" placeholder="Email Address" required>
+          <input type="tel" placeholder="Phone Number">
+          <input type="text" placeholder="Vehicle Year, Make &amp; Model" required>
+          <select required><option value="">Service Type…</option><option>Exterior Detailing</option><option>Interior Detailing</option><option>Exterior + Interior Combo</option><option>Not sure — help me choose</option></select>
+          <button type="submit" class="btn btn-red btn-sm" style="width:100%;border-radius:100px;">Get Free Quote</button>
         </form>
-        <div id="quote-success" style="margin-top:12px;">
-          <h3>✓ Sent!</h3>
-          <p>We'll be in touch within 24 hours.</p>
+        <div id="quote-success" style="display:none;margin-top:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px;">
+          <p style="color:#fff;font-family:var(--font-head);font-size:18px;">✓ Sent!</p>
+          <p style="color:#555;font-size:13px;margin-top:4px;">We'll be in touch within 24 hours.</p>
         </div>
       </div>
     </div>
-
   </div>
 
-  <!-- Combo banner -->
-  <div class="combo-banner">
-    <div class="combo-banner-text">
+  <div class="combo-banner reveal">
+    <div>
       <div class="combo-label">Best Value</div>
       <div class="combo-title">Exterior + Interior<br/>Combo Deal</div>
       <div class="combo-sub">Get both services together and save.</div>
     </div>
     <div class="combo-prices">
-      <div class="combo-price-item">
-        <div class="combo-price-type">Coupe / Sedan</div>
-        <div class="combo-price-val">$250 <span>+</span></div>
-      </div>
-      <div class="combo-price-item">
-        <div class="combo-price-type">Truck / SUV / Van</div>
-        <div class="combo-price-val">$300 <span>+</span></div>
-      </div>
+      <div class="combo-price-item"><div class="combo-price-type">Coupe / Sedan</div><div class="combo-price-val">$250 <span>+</span></div></div>
+      <div class="combo-price-item"><div class="combo-price-type">Truck / SUV / Van</div><div class="combo-price-val">$300 <span>+</span></div></div>
     </div>
     <a href="tel:3018978190" class="btn btn-red btn-lg">Call to Book</a>
   </div>
+</section>
 
+<!-- OUR WORK GALLERY -->
+<section class="section" style="padding-top:24px;">
+  <div class="section-header center reveal">
+    <span class="section-label">Our Work</span>
+    <h2 class="section-title">Fresh Off the Detail Bay</h2>
+    <p class="section-sub">Every vehicle gets the same obsessive attention to detail — from daily drivers to exotics.</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item reveal" style="grid-row: span 2;">
+      <img src="images/bmw-interior.jpg" alt="BMW luxury interior detail">
+      <div class="gallery-overlay"><span>Interior Detail</span></div>
+    </div>
+    <div class="gallery-item reveal reveal-delay-1">
+      <img src="images/bmw-console.jpg" alt="BMW center console detail">
+      <div class="gallery-overlay"><span>Center Console</span></div>
+    </div>
+    <div class="gallery-item reveal reveal-delay-2">
+      <img src="images/kia-interior.jpg" alt="Kia Optima interior after detail">
+      <div class="gallery-overlay"><span>Interior Detail</span></div>
+    </div>
+    <div class="gallery-item reveal reveal-delay-1">
+      <img src="images/bmw-x4.jpg" alt="BMW X4 interior detail">
+      <div class="gallery-overlay"><span>BMW X4 Detail</span></div>
+    </div>
+    <div class="gallery-item reveal reveal-delay-2">
+      <img src="images/bmw-rear.jpg" alt="BMW rear seat detail">
+      <div class="gallery-overlay"><span>Rear Cabin Detail</span></div>
+    </div>
+    <div class="gallery-item reveal reveal-delay-3" style="grid-column: span 2;">
+      <img src="images/subaru-trunk.jpg" alt="Clean Subaru trunk after detail">
+      <div class="gallery-overlay"><span>Trunk &amp; Cargo Detail</span></div>
+    </div>
+  </div>
 </section>
 
 <footer class="site-footer">
   <div class="footer-grid">
-    <div class="footer-brand">
-      <img src="../uploads/logo-1777475435311.webp" alt="Duramax Logo">
-      <p>Expert auto body repair serving Kensington, MD and the greater DC metro area since 1989.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Pages</h4>
-      <a href="about.html">About Us</a>
-      <a href="services.html">Services</a>
-      <a href="detailing.html">Detailing</a>
-      <a href="appointments.html">Appointments</a>
-      <a href="reviews.html">Reviews</a>
-      <a href="contact.html">Contact</a>
-    </div>
-    <div class="footer-col">
-      <h4>Detailing</h4>
-      <a href="detailing.html">Exterior Detail</a>
-      <a href="detailing.html">Interior Detail</a>
-      <a href="detailing.html">Combo Package</a>
-      <a href="detailing.html">Custom Quote</a>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <p class="highlight">(301) 897-8190</p>
-      <a href="mailto:duramaxbodyshop@gmail.com" style="color:#666;font-size:13px;text-decoration:none;display:block;margin-bottom:10px;">duramaxbodyshop@gmail.com</a>
-      <p>10515 Summit Ave</p>
-      <p>Kensington, MD 20895</p>
-      <p style="margin-top:8px;">Mon–Fri: 9am – 5pm</p>
-      <p>Sat: 9am – 1pm</p>
-    </div>
+    <div class="footer-brand"><img src="logo-1777475435311.webp" alt="Duramax Logo"><p>Expert auto body repair serving Kensington, MD and the greater DC metro area since 1989.</p></div>
+    <div class="footer-col"><h4>Pages</h4><a href="about.html">About Us</a><a href="services.html">Services</a><a href="detailing.html">Detailing</a><a href="appointments.html">Appointments</a><a href="reviews.html">Reviews</a><a href="contact.html">Contact</a></div>
+    <div class="footer-col"><h4>Detailing</h4><a href="detailing.html">Exterior Detail</a><a href="detailing.html">Interior Detail</a><a href="detailing.html">Combo Package</a><a href="detailing.html">Custom Quote</a></div>
+    <div class="footer-col"><h4>Contact</h4><p class="highlight">(301) 897-8190</p><a href="mailto:duramaxbodyshop@gmail.com" style="color:#888;">duramaxbodyshop@gmail.com</a><p>10515 Summit Ave</p><p>Kensington, MD 20895</p><p style="margin-top:8px;">Mon–Fri: 9am – 5pm</p><p>Sat: 9am – 1pm</p></div>
   </div>
-  <div class="footer-bottom">
-    <p>© 2026 <span>Duramax Body Shop</span>. All rights reserved.</p>
-    <p>10515 Summit Ave, Kensington, MD 20895</p>
-  </div>
+  <div class="footer-bottom"><p>© 2026 <span>Duramax Body Shop</span>. All rights reserved.</p><p>10515 Summit Ave, Kensington, MD 20895</p></div>
 </footer>
-
 <script>
-function handleQuote(e) {
-  e.preventDefault();
-  e.target.style.display = 'none';
-  document.getElementById('quote-success').style.display = 'block';
-}
+function handleQuote(e) { e.preventDefault(); e.target.style.display='none'; document.getElementById('quote-success').style.display='block'; }
+const observer = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Before/After Slider
+(function() {
+  const slider  = document.getElementById('baSlider');
+  const before  = document.getElementById('baBefore');
+  const divider = document.getElementById('baDivider');
+  const range   = document.getElementById('baRange');
+
+  function set(pct) {
+    pct = Math.max(0, Math.min(100, pct));
+    before.style.clipPath   = `inset(0 ${100 - pct}% 0 0)`;
+    divider.style.left      = pct + '%';
+    range.value             = pct;
+  }
+
+  range.addEventListener('input', e => set(+e.target.value));
+
+  let dragging = false;
+  slider.addEventListener('pointerdown', e => {
+    dragging = true;
+    slider.classList.add('dragging');
+    slider.setPointerCapture(e.pointerId);
+  });
+  slider.addEventListener('pointerup',   () => { dragging = false; slider.classList.remove('dragging'); });
+  slider.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    const r = slider.getBoundingClientRect();
+    set(((e.clientX - r.left) / r.width) * 100);
+  });
+
+  set(50);
+})();
 </script>
-<script src="animations.js"></script>
 </body>
 </html>
