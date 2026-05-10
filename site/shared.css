@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -99,7 +99,6 @@ body { font-family: var(--font-body); color: var(--text); background: var(--blac
 .section-sm { padding: 56px 80px; }
 .section-label { font-family: var(--font-head); font-size: 11px; font-weight: 700; color: var(--red); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 12px; display: block; }
 .section-title { font-family: var(--font-display); font-size: clamp(36px, 4.5vw, 60px); line-height: 0.95; letter-spacing: 1px; color: #fff; margin-bottom: 12px; }
-.section-title.white { color: #fff; }
 .section-title.dark { color: #111; }
 .section-sub { font-size: 15px; color: var(--mid); line-height: 1.7; }
 .section-header { margin-bottom: 48px; }
@@ -123,6 +122,7 @@ body { font-family: var(--font-body); color: var(--text); background: var(--blac
 .footer-col a, .footer-col p { display: block; font-size: 13px; color: #888; text-decoration: none; line-height: 1; margin-bottom: 10px; transition: color 0.2s; }
 .footer-col a:hover { color: var(--red); }
 .footer-col .highlight { color: #888; font-weight: 600; font-family: var(--font-head); font-size: 16px; }
+.footer-email { color: #888 !important; }
 .footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; }
 .footer-bottom p { font-size: 12px; color: #777; }
 .footer-bottom span { color: var(--red); }
@@ -138,6 +138,7 @@ body { font-family: var(--font-body); color: var(--text); background: var(--blac
 .reveal-delay-1 { transition-delay: 0.12s; }
 .reveal-delay-2 { transition-delay: 0.24s; }
 .reveal-delay-3 { transition-delay: 0.36s; }
+.reveal-delay-4 { transition-delay: 0.48s; }
 
 /* ── KEYFRAMES ── */
 @keyframes btn-shimmer {

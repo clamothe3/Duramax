@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4322M35MY8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-4322M35MY8');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Book an Appointment — Duramax Body Shop</title>
+<title>Book an Appointment | Duramax Body Shop</title>
 <link rel="stylesheet" href="shared.css">
-<link rel="stylesheet" href="animations.css">
 <style>
 .booking-layout {
   display: grid; grid-template-columns: 1fr 380px;
@@ -183,7 +190,7 @@
 <div class="page-hero" style="padding:40px 80px;">
   <div class="page-hero-label">Appointments</div>
   <h1>Book Your Visit</h1>
-  <p>Easy online scheduling — choose your service, pick a time, and we'll confirm within 24 hours.</p>
+  <p>Easy online scheduling. Choose your service, pick a time, and we'll confirm within 24 hours.</p>
 </div>
 
 <div class="booking-layout">
@@ -246,9 +253,9 @@
         <div>
           <div class="service-cat-title">Detailing</div>
           <div class="service-options">
-            <div class="service-option" onclick="selectService(this,'Detailing — Basic')">Basic Detail</div>
-            <div class="service-option" onclick="selectService(this,'Detailing — Premium')">Premium Detail</div>
-            <div class="service-option" onclick="selectService(this,'Detailing — Elite')">Elite Detail</div>
+            <div class="service-option" onclick="selectService(this,'Detailing: Basic')">Basic Detail</div>
+            <div class="service-option" onclick="selectService(this,'Detailing: Premium')">Premium Detail</div>
+            <div class="service-option" onclick="selectService(this,'Detailing: Elite')">Elite Detail</div>
           </div>
         </div>
       </div>
@@ -539,6 +546,5 @@ function submitForm() {
 
 renderCal();
 </script>
-<script src="animations.js"></script>
 </body>
 </html>
