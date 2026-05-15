@@ -281,17 +281,7 @@
         </div>
         <div class="cal-grid" id="cal-grid"></div>
       </div>
-      <div class="time-grid" id="time-grid" style="display:none;">
-        <div class="time-slot" onclick="selectTime(this,'8:00 AM')">8:00 AM</div>
-        <div class="time-slot" onclick="selectTime(this,'9:00 AM')">9:00 AM</div>
-        <div class="time-slot" onclick="selectTime(this,'10:00 AM')">10:00 AM</div>
-        <div class="time-slot" onclick="selectTime(this,'11:00 AM')">11:00 AM</div>
-        <div class="time-slot unavailable">12:00 PM</div>
-        <div class="time-slot" onclick="selectTime(this,'1:00 PM')">1:00 PM</div>
-        <div class="time-slot" onclick="selectTime(this,'2:00 PM')">2:00 PM</div>
-        <div class="time-slot unavailable">3:00 PM</div>
-        <div class="time-slot" onclick="selectTime(this,'4:00 PM')">4:00 PM</div>
-      </div>
+      <div class="time-grid" id="time-grid" style="display:none;"></div>
       <div class="step-actions">
         <button class="btn btn-outline-red btn-md" onclick="goStep(1)">← Back</button>
         <button class="btn btn-red btn-md" onclick="goStep(3)">Next: Your Info →</button>
@@ -417,7 +407,7 @@
 
     <div class="contact-info-box">
       <h4>Prefer to Call?</h4>
-      <p><a href="tel:3018978190">(301) 897-8190</a><br/>Mon–Fri: 8am – 6pm<br/>Sat: 9am – 3pm<br/><br/>10515 Summit Ave<br/>Kensington, MD 20895</p>
+      <p><a href="tel:3018978190">(301) 897-8190</a><br/>Mon–Fri: 9am – 6pm<br/>Sat: 9am – 1pm<br/><br/>10515 Summit Ave<br/>Kensington, MD 20895</p>
     </div>
   </div>
 </div>
@@ -507,8 +497,21 @@ function renderCal() {
   grid.innerHTML = html;
 }
 
+function renderTimeSlots(date) {
+  const isSat = new Date(date).getDay() === 6;
+  const slots = isSat
+    ? ['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM']
+    : ['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'];
+  const grid = document.getElementById('time-grid');
+  grid.innerHTML = slots.map(t =>
+    `<div class="time-slot" onclick="selectTime(this,'${t}')">${t}</div>`
+  ).join('');
+  if (state.time && !slots.includes(state.time)) { state.time = ''; setSumVal('sum-time', 'Not selected'); }
+}
+
 function selectDay(el, date) {
   state.date = date;
+  renderTimeSlots(date);
   document.getElementById('time-grid').style.display = 'grid';
   renderCal();
   setSumVal('sum-date', date);
