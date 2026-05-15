@@ -141,7 +141,34 @@ select option { background: #1a1a1a; color: #fff; }
   <div class="footer-bottom"><p>© 2026 <span>Duramax Body Shop</span>. All rights reserved.</p><p>10515 Summit Ave, Kensington, MD 20895</p></div>
 </footer>
 <script>
-function handleSubmit(e) { e.preventDefault(); e.target.style.display='none'; document.getElementById('form-success').style.display='block'; }
+async function handleSubmit(e) {
+  e.preventDefault();
+  const f = e.target;
+  const inputs = f.querySelectorAll('input, select, textarea');
+  const btn = f.querySelector('button[type=submit]');
+  if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+  const body = new URLSearchParams({
+    apiKey: 'sf_ec97b102835d5d533da9b990',
+    subject: 'New Contact Message — Duramax Body Shop',
+    name: ((inputs[0]?.value||'') + ' ' + (inputs[1]?.value||'')).trim(),
+    email: inputs[3]?.value || '',
+    phone: inputs[2]?.value || '',
+    message: [
+      'Subject: ' + (inputs[4]?.value || '—'),
+      'Vehicle: ' + (inputs[5]?.value || '—'),
+      'Message: ' + (inputs[6]?.value || '—')
+    ].join('\n')
+  });
+  try {
+    await fetch('https://api.staticforms.dev/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body.toString()
+    });
+  } catch(err) {}
+  f.style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+}
 </script>
 </body>
 </html>

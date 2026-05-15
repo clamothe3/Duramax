@@ -425,7 +425,33 @@ select option { background: #1a1a1a; color: #fff; }
   <div class="footer-bottom"><p>© 2026 <span>Duramax Body Shop</span>. All rights reserved.</p><p>10515 Summit Ave, Kensington, MD 20895</p></div>
 </footer>
 <script>
-function handleQuote(e) { e.preventDefault(); e.target.style.display='none'; document.getElementById('quote-success').style.display='block'; }
+async function handleQuote(e) {
+  e.preventDefault();
+  const f = e.target;
+  const inputs = f.querySelectorAll('input, select');
+  const btn = f.querySelector('button[type=submit]');
+  if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+  const body = new URLSearchParams({
+    apiKey: 'sf_ec97b102835d5d533da9b990',
+    subject: 'New Detailing Quote Request — Duramax Body Shop',
+    name: inputs[0]?.value || '',
+    email: inputs[1]?.value || '',
+    phone: inputs[2]?.value || '',
+    message: [
+      'Vehicle: ' + (inputs[3]?.value || '—'),
+      'Service Type: ' + (inputs[4]?.value || '—')
+    ].join('\n')
+  });
+  try {
+    await fetch('https://api.staticforms.dev/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body.toString()
+    });
+  } catch(err) {}
+  f.style.display = 'none';
+  document.getElementById('quote-success').style.display = 'block';
+}
 const observer = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 

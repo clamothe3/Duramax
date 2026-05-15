@@ -532,7 +532,31 @@ function populateConfirm() {
   document.getElementById('confirm-vehicle').textContent = document.getElementById('sum-vehicle').textContent;
 }
 
-function submitForm() {
+async function submitForm() {
+  const inputs = document.querySelectorAll('#panel-3 input');
+  const btn = document.querySelector('#panel-4 .btn-red');
+  if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+  const body = new URLSearchParams({
+    apiKey: 'sf_ec97b102835d5d533da9b990',
+    subject: 'New Appointment Request — Duramax Body Shop',
+    name: ((inputs[0]?.value||'') + ' ' + (inputs[1]?.value||'')).trim(),
+    phone: inputs[2]?.value || '',
+    email: inputs[3]?.value || '',
+    message: [
+      'Service: ' + (state.service || '—'),
+      'Date: ' + (state.date || '—'),
+      'Time: ' + (state.time || '—'),
+      'Vehicle: ' + (((inputs[4]?.value||'') + ' ' + (inputs[5]?.value||'')).trim() || '—'),
+      'Notes: ' + (document.querySelector('#panel-3 textarea')?.value || '—')
+    ].join('\n')
+  });
+  try {
+    await fetch('https://api.staticforms.dev/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body.toString()
+    });
+  } catch(e) {}
   document.getElementById('success-msg').style.display = 'block';
   document.querySelector('#panel-4 .step-actions').style.display = 'none';
 }
