@@ -35,10 +35,18 @@
 .cta-reviews { background: var(--red); padding: 56px 80px; display: flex; justify-content: space-between; align-items: center; gap: 32px; }
 .cta-reviews h2 { font-family: var(--font-display); font-size: 48px; color: #fff; line-height: 1; margin-bottom: 8px; letter-spacing: 1px; }
 .cta-reviews p { font-size: 15px; color: rgba(255,255,255,0.65); }
+
+@media (max-width: 860px) {
+  .reviews-summary { flex-direction: column; gap: 24px; padding: 32px 24px; text-align: center; }
+  .score-num { font-size: 72px; }
+  .reviews-grid { grid-template-columns: 1fr; }
+  .cta-reviews { flex-direction: column; text-align: center; padding: 40px 24px; }
+}
 </style>
 </head>
 <body>
 <script src="transition.js"></script>
+<script src="mobile-nav.js"></script>
 <nav class="site-nav">
   <a href="index.html" class="nav-logo">
     <img src="logo-1777475435311.webp" alt="Duramax Logo">

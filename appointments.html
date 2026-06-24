@@ -109,6 +109,16 @@
 .time-slot.selected { border-color: var(--red); background: rgba(204,0,0,0.1); color: #fff; font-weight: 600; }
 .time-slot.unavailable { color: #333; background: transparent; cursor: not-allowed; }
 
+/* Photo upload */
+.photo-upload { border: 2px dashed var(--border); border-radius: 12px; padding: 22px; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+.photo-upload:hover { border-color: rgba(204,0,0,0.4); background: rgba(204,0,0,0.03); }
+.photo-upload-text { font-size: 13px; color: var(--mid); line-height: 1.6; }
+.photo-upload-text span { display: block; font-size: 11px; color: #555; margin-top: 4px; }
+.photo-preview-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.photo-thumb { position: relative; width: 72px; height: 72px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+.photo-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo-thumb .remove-photo { position: absolute; top: 2px; right: 2px; width: 18px; height: 18px; border-radius: 50%; background: rgba(0,0,0,0.75); color: #fff; font-size: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; line-height: 1; }
+
 /* Info form */
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .form-group { display: flex; flex-direction: column; gap: 6px; }
@@ -160,10 +170,26 @@
 .contact-info-box h4 { font-family: 'Barlow Condensed',sans-serif; font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 12px; }
 .contact-info-box p { font-size: 13px; color: #777; line-height: 1.8; }
 .contact-info-box a { color: var(--red); text-decoration: none; }
+
+.booking-hero { padding: 40px 80px; }
+
+@media (max-width: 860px) {
+  .booking-hero { padding: 110px 24px 32px; }
+  .booking-layout { grid-template-columns: 1fr; }
+  .booking-main { padding: 32px 24px; }
+  .booking-sidebar { position: static; height: auto; padding: 32px 24px; border-left: none; border-top: 1px solid var(--border); }
+  .steps-nav { overflow-x: auto; }
+  .service-options { grid-template-columns: 1fr; }
+  .time-grid { grid-template-columns: repeat(2,1fr); }
+  .form-grid { grid-template-columns: 1fr; }
+  .confirm-grid { grid-template-columns: 1fr !important; }
+  .calendar-wrap { max-width: 100%; }
+}
 </style>
 </head>
 <body>
 
+<script src="mobile-nav.js"></script>
 <nav class="site-nav">
   <a href="index.html" class="nav-logo">
     <img src="../uploads/logo-1777475435311.webp" alt="Duramax Logo">
@@ -180,7 +206,7 @@
   </div>
 </nav>
 
-<div class="page-hero" style="padding:40px 80px;">
+<div class="page-hero booking-hero">
   <div class="page-hero-label">Appointments</div>
   <h1>Book Your Visit</h1>
   <p>Easy online scheduling — choose your service, pick a time, and we'll confirm within 24 hours.</p>
@@ -309,6 +335,14 @@
           <label>Additional Notes (optional)</label>
           <textarea placeholder="Describe any additional details about your vehicle or the issue…"></textarea>
         </div>
+        <div class="form-group full">
+          <label>Photos for Estimate (optional)</label>
+          <div class="photo-upload" onclick="document.getElementById('photo-input').click()">
+            <input type="file" id="photo-input" accept="image/*" multiple style="display:none;" onchange="handlePhotoSelect(this.files)">
+            <div class="photo-upload-text">📷 Click to add photos of the damage<span>Up to 5 photos, 4.5MB each</span></div>
+          </div>
+          <div class="photo-preview-grid" id="photo-preview-grid"></div>
+        </div>
       </div>
       <div class="step-actions">
         <button class="btn btn-outline-red btn-md" onclick="goStep(2)">← Back</button>
@@ -321,7 +355,7 @@
       <div class="step-title">Confirm Your Appointment</div>
       <div class="step-sub">Review your details below, then submit to request your appointment.</div>
       <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:16px;padding:28px 32px;margin-bottom:28px;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div class="confirm-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
           <div>
             <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:1px;color:var(--mid);text-transform:uppercase;margin-bottom:4px;">Service</div>
             <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;" id="confirm-service">—</div>
@@ -440,7 +474,29 @@
 </footer>
 
 <script>
-const state = { step:1, service:'', date:'', time:'', month:4, year:2026 };
+const state = { step:1, service:'', date:'', time:'', month:4, year:2026, photos:[] };
+
+function handlePhotoSelect(files) {
+  for (const file of files) {
+    if (state.photos.length >= 5) { alert('Maximum 5 photos.'); break; }
+    if (file.size > 4.5 * 1024 * 1024) { alert(file.name + ' is too large (max 4.5MB).'); continue; }
+    state.photos.push(file);
+  }
+  document.getElementById('photo-input').value = '';
+  renderPhotoPreviews();
+}
+
+function removePhoto(i) {
+  state.photos.splice(i, 1);
+  renderPhotoPreviews();
+}
+
+function renderPhotoPreviews() {
+  const grid = document.getElementById('photo-preview-grid');
+  grid.innerHTML = state.photos.map((file, i) =>
+    `<div class="photo-thumb"><img src="${URL.createObjectURL(file)}"><div class="remove-photo" onclick="removePhoto(${i})">×</div></div>`
+  ).join('');
+}
 
 function goStep(n) {
   document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
@@ -539,25 +595,25 @@ async function submitForm() {
   const inputs = document.querySelectorAll('#panel-3 input');
   const btn = document.querySelector('#panel-4 .btn-red');
   if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
-  const body = new URLSearchParams({
-    apiKey: 'sf_ec97b102835d5d533da9b990',
-    subject: 'New Appointment Request — Duramax Body Shop',
-    name: ((inputs[0]?.value||'') + ' ' + (inputs[1]?.value||'')).trim(),
-    phone: inputs[2]?.value || '',
-    email: inputs[3]?.value || '',
-    message: [
-      'Service: ' + (state.service || '—'),
-      'Date: ' + (state.date || '—'),
-      'Time: ' + (state.time || '—'),
-      'Vehicle: ' + (((inputs[4]?.value||'') + ' ' + (inputs[5]?.value||'')).trim() || '—'),
-      'Notes: ' + (document.querySelector('#panel-3 textarea')?.value || '—')
-    ].join('\n')
-  });
+  const fd = new FormData();
+  fd.append('apiKey', 'sf_ec97b102835d5d533da9b990');
+  fd.append('subject', 'New Appointment Request — Duramax Body Shop');
+  fd.append('name', ((inputs[0]?.value||'') + ' ' + (inputs[1]?.value||'')).trim());
+  fd.append('phone', inputs[2]?.value || '');
+  fd.append('email', inputs[3]?.value || '');
+  fd.append('message', [
+    'Service: ' + (state.service || '—'),
+    'Date: ' + (state.date || '—'),
+    'Time: ' + (state.time || '—'),
+    'Vehicle: ' + (((inputs[4]?.value||'') + ' ' + (inputs[5]?.value||'')).trim() || '—'),
+    'Notes: ' + (document.querySelector('#panel-3 textarea')?.value || '—'),
+    'Photos attached: ' + state.photos.length
+  ].join('\n'));
+  state.photos.forEach((file, i) => fd.append('photo' + (i+1), file));
   try {
     await fetch('https://api.staticforms.dev/submit', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: body.toString()
+      body: fd
     });
   } catch(e) {}
   document.getElementById('success-msg').style.display = 'block';

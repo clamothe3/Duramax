@@ -61,10 +61,19 @@ select option { background: #1a1a1a; color: #fff; }
 #form-success { display:none; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 24px; margin-top: 16px; }
 #form-success h3 { font-family: var(--font-display); font-size: 24px; color: #fff; margin-bottom: 8px; }
 #form-success p { font-size: 13px; color: #555; }
+
+@media (max-width: 860px) {
+  .contact-layout { grid-template-columns: 1fr; }
+  .contact-form-area { padding: 40px 24px; border-right: none; border-bottom: 1px solid var(--border); }
+  .contact-info-area { padding: 40px 24px; }
+  .form-row { grid-template-columns: 1fr; }
+  .hours-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
 <script src="transition.js"></script>
+<script src="mobile-nav.js"></script>
 <nav class="site-nav">
   <a href="index.html" class="nav-logo">
     <img src="logo-1777475435311.webp" alt="Duramax Logo">

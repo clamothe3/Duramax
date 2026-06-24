@@ -91,10 +91,24 @@
 .qb-book-btn:hover { background: var(--red); border-color: var(--red); }
 .qb-book-btn svg { transition: transform 0.25s; }
 .qb-book-btn:hover svg { transform: translateX(3px); }
+
+@media (max-width: 860px) {
+  .services-layout { grid-template-columns: 1fr; }
+  .services-sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); padding: 16px 0; display: flex; overflow-x: auto; white-space: nowrap; }
+  .sidebar-cat { margin-top: 0; flex-shrink: 0; }
+  .sidebar-link { flex-shrink: 0; border-left: none; border-bottom: 2px solid transparent; }
+  .sidebar-link.active { border-left-color: transparent; border-bottom-color: var(--red); }
+  .services-content { padding: 32px 24px; }
+  .cat-grid { grid-template-columns: 1fr; }
+  .cta-banner { flex-direction: column; align-items: flex-start; gap: 16px; padding: 24px; }
+  .quick-book-section { padding: 48px 24px; }
+  .quick-book-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
 <script src="transition.js"></script>
+<script src="mobile-nav.js"></script>
 <nav class="site-nav">
   <a href="index.html" class="nav-logo">
     <img src="logo-1777475435311.webp" alt="Duramax Logo">

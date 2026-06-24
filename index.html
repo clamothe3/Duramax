@@ -503,12 +503,54 @@ body::before {
   0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
   50% { opacity: 1; transform: scaleY(1); }
 }
+
+/* ── RESPONSIVE / MOBILE ── */
+@media (max-width: 860px) {
+  .site-nav { width: calc(100vw - 24px); padding: 8px 8px 8px 16px; top: 14px; }
+  .nav-logo img { width: 30px; height: 30px; }
+  .nav-logo-text strong { font-size: 14px; }
+  .nav-logo-text span { display: none; }
+
+  .hero { padding: 110px 20px 48px; min-height: auto; }
+  .hero h1 { font-size: clamp(44px, 14vw, 80px); }
+  .hero-sub { max-width: 100%; }
+  .carousel-item { width: 220px; height: 160px; }
+
+  .trust-bar { padding: 10px 16px; gap: 8px 16px; }
+  .trust-bar span { font-size: 11px; }
+
+  .section { padding: 56px 24px; }
+  .section-sm { padding: 40px 24px; }
+  .services-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+
+  .about-strip { padding: 56px 24px; flex-direction: column; gap: 32px; }
+  .about-strip-img { flex: none; width: 100%; height: 260px; }
+  .about-strip-stats { flex-wrap: wrap; gap: 24px; }
+
+  .why-grid { grid-template-columns: 1fr; gap: 14px; }
+
+  .cta-row { grid-template-columns: 1fr; }
+  .cta-block { padding: 48px 24px; }
+
+  .site-footer { padding: 48px 24px 24px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; margin-bottom: 32px; }
+  .footer-brand p { max-width: 100%; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
+}
+
+@media (max-width: 480px) {
+  .hero { padding: 100px 16px 40px; }
+  .section { padding: 44px 18px; }
+  .section-sm { padding: 32px 18px; }
+  .services-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
 <script src="transition.js"></script>
 
 <!-- NAV -->
+<script src="mobile-nav.js"></script>
 <nav class="site-nav">
   <a href="index.html" class="nav-logo">
     <img src="../uploads/logo-1777475435311.webp" alt="Duramax Logo">

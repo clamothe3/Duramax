@@ -236,10 +236,23 @@ input:not(.ba-range), select, textarea {
 }
 input:focus, select:focus, textarea:focus { border-color: rgba(204,0,0,0.4) !important; }
 select option { background: #1a1a1a; color: #fff; }
+
+@media (max-width: 860px) {
+  .packages-grid { grid-template-columns: 1fr; }
+  .ba-section { padding: 48px 24px 24px; }
+  .combo-banner { padding: 28px 24px; }
+  .combo-title { font-size: 32px; }
+  .combo-prices { gap: 20px; width: 100%; justify-content: space-around; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
+}
+@media (max-width: 480px) {
+  .gallery-grid { grid-template-columns: 1fr; grid-auto-rows: 220px; }
+}
 </style>
 </head>
 <body>
 <script src="transition.js"></script>
+<script src="mobile-nav.js"></script>
 <nav class="site-nav">
   <a href="index.html" class="nav-logo">
     <img src="logo-1777475435311.webp" alt="Duramax Logo">
